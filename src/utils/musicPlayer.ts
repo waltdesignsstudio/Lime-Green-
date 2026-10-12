@@ -1,90 +1,51 @@
 /**
- * Mohabbatein Love Theme Instrumental Synthesizer & Music Manager
- * Synthesizes the iconic romantic violin & piano melody of Mohabbatein
- * using Web Audio API with natural vibrato and acoustic resonance.
+ * Jungle Silence & Waterfall Ambient Synthesizer
+ * Generates an organic, calming soundscape of peaceful jungle stillness,
+ * flowing mountain waterfall stream, subtle bamboo flute, and gentle forest drops.
+ * Includes instant pause/resume controls with zero audio latency or leaks.
  */
 
-// Note frequency map (in Hz)
-const NOTES: Record<string, number> = {
-  "A3": 220.00,
-  "Bb3": 233.08,
-  "B3": 246.94,
-  "C4": 261.63,
-  "C#4": 277.18,
-  "D4": 293.66,
-  "Eb4": 311.13,
-  "E4": 329.63,
-  "F4": 349.23,
-  "F#4": 369.99,
-  "G4": 392.00,
-  "G#4": 415.30,
-  "A4": 440.00,
-  "Bb4": 466.16,
-  "B4": 493.88,
-  "C5": 523.25,
-  "C#5": 554.37,
-  "D5": 587.33,
-  "Eb5": 622.25,
-  "E5": 659.25,
-  "F5": 698.46,
-};
-
-// Iconic Mohabbatein Violin melody note durations (note, duration in seconds)
-const MOHABBATEIN_MELODY: Array<{ note: string; dur: number; pause?: number }> = [
-  // Phrase 1
-  { note: "D4", dur: 0.6 },
-  { note: "E4", dur: 0.5 },
-  { note: "F4", dur: 0.8 },
-  { note: "G4", dur: 0.6 },
-  { note: "A4", dur: 1.2 },
-  { note: "F4", dur: 0.6 },
-  { note: "E4", dur: 0.6 },
-  { note: "D4", dur: 1.4, pause: 0.3 },
-
-  // Phrase 2
-  { note: "D4", dur: 0.6 },
-  { note: "F4", dur: 0.6 },
-  { note: "A4", dur: 0.8 },
-  { note: "D5", dur: 1.2 },
-  { note: "C#5", dur: 0.8 },
-  { note: "A4", dur: 0.7 },
-  { note: "F4", dur: 0.6 },
-  { note: "E4", dur: 1.4, pause: 0.3 },
-
-  // Phrase 3
-  { note: "G4", dur: 0.6 },
-  { note: "F4", dur: 0.6 },
-  { note: "E4", dur: 0.7 },
-  { note: "D4", dur: 0.7 },
-  { note: "C#4", dur: 0.8 },
-  { note: "D4", dur: 0.6 },
-  { note: "E4", dur: 0.7 },
-  { note: "F4", dur: 0.8 },
-  { note: "D4", dur: 2.0, pause: 0.6 },
-];
-
-class MohabbateinMusicEngine {
+class JungleWaterfallAudioEngine {
   private ctx: AudioContext | null = null;
   private isPlaying = false;
-  private timer: number | null = null;
-  private listeners: Set<(playing: boolean) => void> = new Set();
   private masterGain: GainNode | null = null;
+  private waterfallGain: GainNode | null = null;
+  private jungleGain: GainNode | null = null;
+  private fluteGain: GainNode | null = null;
 
-  constructor() {
-    // Music does NOT autoplay on touching or clicking the page.
-    // It is strictly controlled via the dedicated Play/Pause button.
-  }
+  private waterfallSource: AudioBufferSourceNode | null = null;
+  private cricketOsc: OscillatorNode | null = null;
+  private cricketMod: OscillatorNode | null = null;
 
-  private initContext() {
+  private melodyTimer: number | null = null;
+  private birdTimer: number | null = null;
+  private listeners: Set<(playing: boolean) => void> = new Set();
+
+  private initAudio() {
     if (!this.ctx) {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext })
+          .webkitAudioContext;
       this.ctx = new AudioCtx();
+
+      // Master output gain
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(0.24, this.ctx.currentTime);
       this.masterGain.connect(this.ctx.destination);
-    }
-    if (this.ctx.state === "suspended") {
-      this.ctx.resume();
+
+      // Sub-mix gains
+      this.waterfallGain = this.ctx.createGain();
+      this.waterfallGain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+      this.waterfallGain.connect(this.masterGain);
+
+      this.jungleGain = this.ctx.createGain();
+      this.jungleGain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+      this.jungleGain.connect(this.masterGain);
+
+      this.fluteGain = this.ctx.createGain();
+      this.fluteGain.gain.setValueAtTime(0.22, this.ctx.currentTime);
+      this.fluteGain.connect(this.masterGain);
     }
   }
 
@@ -98,31 +59,345 @@ class MohabbateinMusicEngine {
 
   private notify() {
     this.listeners.forEach((cb) => cb(this.isPlaying));
-    if (typeof window !== "undefined") {
-      localStorage.setItem("lime_green_music_playing", this.isPlaying ? "true" : "false");
+    try {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("lime_green_music_playing", this.isPlaying ? "true" : "false");
+      }
+    } catch {
+      // Ignore storage errors
     }
   }
 
-  public getStatus() {
+  public getStatus(): boolean {
     return this.isPlaying;
   }
 
-  public play() {
-    this.initContext();
+  /**
+   * Generates a 5-second seamless looped stereo pink-brown noise buffer
+   * for realistic natural waterfall and flowing stream acoustics.
+   */
+  private createWaterfallBuffer(): AudioBuffer {
+    if (!this.ctx) throw new Error("AudioContext missing");
+    const sampleRate = this.ctx.sampleRate;
+    const bufferSize = sampleRate * 5; // 5 seconds loop
+    const buffer = this.ctx.createBuffer(2, bufferSize, sampleRate);
+
+    for (let channel = 0; channel < 2; channel++) {
+      const data = buffer.getChannelData(channel);
+      let b0 = 0;
+      let b1 = 0;
+      let b2 = 0;
+      let b3 = 0;
+      let b4 = 0;
+      let b5 = 0;
+      let b6 = 0;
+
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        // Paul Kellet's filtered pink noise algorithm
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        b3 = 0.86650 * b3 + white * 0.3104856;
+        b4 = 0.55000 * b4 + white * 0.5329522;
+        b5 = -0.7616 * b5 - white * 0.0168980;
+        const pink = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+        b6 = white * 0.115926;
+        data[i] = pink * 0.12;
+      }
+    }
+    return buffer;
+  }
+
+  /**
+   * Starts the organic waterfall stream layer
+   */
+  private startWaterfall() {
+    if (!this.ctx || !this.waterfallGain) return;
+
+    try {
+      const noiseBuffer = this.createWaterfallBuffer();
+      const source = this.ctx.createBufferSource();
+      source.buffer = noiseBuffer;
+      source.loop = true;
+
+      // Waterfall acoustic sculpting: deep lowpass (cascading falls) + airy bandpass (mist spray)
+      const lowFilter = this.ctx.createBiquadFilter();
+      lowFilter.type = "lowpass";
+      lowFilter.frequency.setValueAtTime(450, this.ctx.currentTime);
+      lowFilter.Q.setValueAtTime(1.2, this.ctx.currentTime);
+
+      const sprayFilter = this.ctx.createBiquadFilter();
+      sprayFilter.type = "bandpass";
+      sprayFilter.frequency.setValueAtTime(950, this.ctx.currentTime);
+      sprayFilter.Q.setValueAtTime(0.8, this.ctx.currentTime);
+
+      // Slow organic swell LFO (waterfall rushing movement)
+      const swellOsc = this.ctx.createOscillator();
+      const swellGain = this.ctx.createGain();
+      swellOsc.frequency.setValueAtTime(0.12, this.ctx.currentTime);
+      swellGain.gain.setValueAtTime(60, this.ctx.currentTime);
+      swellOsc.connect(swellGain);
+      swellGain.connect(lowFilter.frequency);
+
+      source.connect(lowFilter);
+      source.connect(sprayFilter);
+      lowFilter.connect(this.waterfallGain);
+      sprayFilter.connect(this.waterfallGain);
+
+      swellOsc.start();
+      source.start();
+      this.waterfallSource = source;
+    } catch {
+      // Audio setup failure fallback
+    }
+  }
+
+  /**
+   * Starts peaceful jungle stillness layer: faint night crickets & wind whisper
+   */
+  private startJungleAtmosphere() {
+    if (!this.ctx || !this.jungleGain) return;
+
+    try {
+      // Gentle cricket chirping tremolo
+      const osc = this.ctx.createOscillator();
+      const mod = this.ctx.createOscillator();
+      const modGain = this.ctx.createGain();
+      const cricketAmp = this.ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(4600, this.ctx.currentTime);
+
+      mod.type = "square";
+      mod.frequency.setValueAtTime(14, this.ctx.currentTime);
+      modGain.gain.setValueAtTime(0.5, this.ctx.currentTime);
+
+      cricketAmp.gain.setValueAtTime(0.015, this.ctx.currentTime); // Very subtle
+
+      mod.connect(modGain);
+      modGain.connect(cricketAmp.gain);
+      osc.connect(cricketAmp);
+      cricketAmp.connect(this.jungleGain);
+
+      osc.start();
+      mod.start();
+
+      this.cricketOsc = osc;
+      this.cricketMod = mod;
+    } catch {
+      // Ignore
+    }
+  }
+
+  /**
+   * Occasional peaceful meditative bamboo flute / water drop chimes
+   */
+  private playBambooFluteNote(freq: number, dur: number) {
+    if (!this.ctx || !this.fluteGain || !this.isPlaying) return;
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
+    const noteGain = this.ctx.createGain();
+    const filter = this.ctx.createBiquadFilter();
+
+    // Bamboo flute hollow warmth
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, t);
+
+    // Warm overtone
+    osc2.type = "triangle";
+    osc2.frequency.setValueAtTime(freq * 2, t);
+
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(freq * 2.8, t);
+
+    // Gentle soft attack and meditative long decay
+    noteGain.gain.setValueAtTime(0.0001, t);
+    noteGain.gain.linearRampToValueAtTime(0.09, t + 0.4);
+    noteGain.gain.setValueAtTime(0.07, t + dur * 0.7);
+    noteGain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+
+    osc.connect(filter);
+    osc2.connect(filter);
+    filter.connect(noteGain);
+    noteGain.connect(this.fluteGain);
+
+    osc.start(t);
+    osc2.start(t);
+    osc.stop(t + dur + 0.1);
+    osc2.stop(t + dur + 0.1);
+  }
+
+  /**
+   * Serene Indus valley & jungle flute motif (peaceful pentatonic notes)
+   */
+  private scheduleMelodyLoop() {
+    if (!this.isPlaying) return;
+
+    const PENTATONIC_NOTES = [
+      { f: 293.66, dur: 3.2 }, // D4
+      { f: 349.23, dur: 2.8 }, // F4
+      { f: 392.00, dur: 3.5 }, // G4
+      { f: 440.00, dur: 4.0 }, // A4
+      { f: 523.25, dur: 3.0 }, // C5
+      { f: 587.33, dur: 4.5 }, // D5
+      { f: 440.00, dur: 3.5 }, // A4
+      { f: 392.00, dur: 4.2 }, // G4
+    ];
+
+    let delayMs = 1200;
+
+    PENTATONIC_NOTES.forEach((note) => {
+      window.setTimeout(() => {
+        if (this.isPlaying) {
+          this.playBambooFluteNote(note.f, note.dur);
+        }
+      }, delayMs);
+      delayMs += (note.dur + 1.8) * 1000;
+    });
+
+    // Schedule next cycle with calm space
+    this.melodyTimer = window.setTimeout(() => {
+      if (this.isPlaying) {
+        this.scheduleMelodyLoop();
+      }
+    }, delayMs + 3000);
+  }
+
+  /**
+   * Subtle soft jungle bird call in the distance
+   */
+  private scheduleJungleBird() {
+    if (!this.isPlaying) return;
+
+    const interval = Math.floor(Math.random() * 8000) + 6000;
+    this.birdTimer = window.setTimeout(() => {
+      if (this.isPlaying && this.ctx && this.jungleGain) {
+        try {
+          const t = this.ctx.currentTime;
+          const bird = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          bird.type = "sine";
+          bird.frequency.setValueAtTime(2800, t);
+          bird.frequency.exponentialRampToValueAtTime(3200, t + 0.08);
+          bird.frequency.exponentialRampToValueAtTime(2400, t + 0.22);
+
+          gain.gain.setValueAtTime(0.0001, t);
+          gain.gain.linearRampToValueAtTime(0.03, t + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.25);
+
+          bird.connect(gain);
+          gain.connect(this.jungleGain);
+
+          bird.start(t);
+          bird.stop(t + 0.3);
+        } catch {
+          // Ignore
+        }
+        this.scheduleJungleBird();
+      }
+    }, interval);
+  }
+
+  /**
+   * Resumes or starts playback
+   */
+  public async play() {
+    this.initAudio();
     if (!this.ctx || !this.masterGain) return;
+
     if (this.isPlaying) return;
+
+    if (this.ctx.state === "suspended") {
+      await this.ctx.resume();
+    }
+
+    // Smooth un-mute master gain
+    this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
+    this.masterGain.gain.setValueAtTime(0.0001, this.ctx.currentTime);
+    this.masterGain.gain.linearRampToValueAtTime(0.24, this.ctx.currentTime + 0.3);
 
     this.isPlaying = true;
     this.notify();
-    this.playLoop();
+
+    // Start all layers
+    this.startWaterfall();
+    this.startJungleAtmosphere();
+    this.scheduleMelodyLoop();
+    this.scheduleJungleBird();
+  }
+
+  /**
+   * Pauses all sound immediately with zero delay and zero bleed
+   */
+  public pause() {
+    this.stop();
   }
 
   public stop() {
     this.isPlaying = false;
-    if (this.timer) {
-      window.clearTimeout(this.timer);
-      this.timer = null;
+
+    // Clear all pending timers
+    if (this.melodyTimer) {
+      window.clearTimeout(this.melodyTimer);
+      this.melodyTimer = null;
     }
+    if (this.birdTimer) {
+      window.clearTimeout(this.birdTimer);
+      this.birdTimer = null;
+    }
+
+    if (this.ctx && this.masterGain) {
+      try {
+        // Immediate silence ramp
+        this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
+        this.masterGain.gain.setValueAtTime(0, this.ctx.currentTime);
+      } catch {
+        // Ignore
+      }
+
+      // Stop running continuous nodes
+      if (this.waterfallSource) {
+        try {
+          this.waterfallSource.stop();
+          this.waterfallSource.disconnect();
+        } catch {
+          // Ignore
+        }
+        this.waterfallSource = null;
+      }
+
+      if (this.cricketOsc) {
+        try {
+          this.cricketOsc.stop();
+          this.cricketOsc.disconnect();
+        } catch {
+          // Ignore
+        }
+        this.cricketOsc = null;
+      }
+
+      if (this.cricketMod) {
+        try {
+          this.cricketMod.stop();
+          this.cricketMod.disconnect();
+        } catch {
+          // Ignore
+        }
+        this.cricketMod = null;
+      }
+
+      // Suspend audio context to save CPU & battery
+      try {
+        this.ctx.suspend();
+      } catch {
+        // Ignore
+      }
+    }
+
     this.notify();
   }
 
@@ -133,77 +408,6 @@ class MohabbateinMusicEngine {
       this.play();
     }
   }
-
-  private playTone(freq: number, duration: number, startTime: number) {
-    if (!this.ctx || !this.masterGain) return;
-
-    // Violin timbre simulation using dual saw/triangle oscillators with subtle vibrato
-    const osc1 = this.ctx.createOscillator();
-    const osc2 = this.ctx.createOscillator();
-    const vibrato = this.ctx.createOscillator();
-    const vibratoGain = this.ctx.createGain();
-    const noteGain = this.ctx.createGain();
-    const filter = this.ctx.createBiquadFilter();
-
-    osc1.type = "sawtooth";
-    osc2.type = "triangle";
-
-    // Warm filter for acoustic string resonance
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1400, startTime);
-    filter.Q.setValueAtTime(2.2, startTime);
-
-    // Vibrato LFO (5.2 Hz gentle romantic vibrato)
-    vibrato.frequency.setValueAtTime(5.2, startTime);
-    vibratoGain.gain.setValueAtTime(2.5, startTime);
-    vibrato.connect(vibratoGain);
-    vibratoGain.connect(osc1.frequency);
-    vibratoGain.connect(osc2.frequency);
-
-    osc1.frequency.setValueAtTime(freq, startTime);
-    osc2.frequency.setValueAtTime(freq * 1.002, startTime); // Slight chorus detune
-
-    // Gentle string attack & decay envelope
-    noteGain.gain.setValueAtTime(0.0001, startTime);
-    noteGain.gain.exponentialRampToValueAtTime(0.24, startTime + 0.12);
-    noteGain.gain.setValueAtTime(0.2, startTime + duration - 0.08);
-    noteGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-
-    osc1.connect(filter);
-    osc2.connect(filter);
-    filter.connect(noteGain);
-    noteGain.connect(this.masterGain);
-
-    vibrato.start(startTime);
-    osc1.start(startTime);
-    osc2.start(startTime);
-
-    vibrato.stop(startTime + duration);
-    osc1.stop(startTime + duration);
-    osc2.stop(startTime + duration);
-  }
-
-  private playLoop() {
-    if (!this.isPlaying || !this.ctx) return;
-
-    const startAudioTime = this.ctx.currentTime + 0.05;
-    let accumulatedTime = startAudioTime;
-
-    for (let i = 0; i < MOHABBATEIN_MELODY.length; i++) {
-      const item = MOHABBATEIN_MELODY[i];
-      const freq = NOTES[item.note] || 440;
-      this.playTone(freq, item.dur, accumulatedTime);
-      accumulatedTime += item.dur + (item.pause || 0.04);
-    }
-
-    const totalDurationMs = (accumulatedTime - startAudioTime) * 1000;
-
-    this.timer = window.setTimeout(() => {
-      if (this.isPlaying) {
-        this.playLoop();
-      }
-    }, totalDurationMs);
-  }
 }
 
-export const musicEngine = new MohabbateinMusicEngine();
+export const musicEngine = new JungleWaterfallAudioEngine();

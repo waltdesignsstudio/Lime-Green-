@@ -20,6 +20,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
   const [loadingTransition, setLoadingTransition] = useState(false);
   const [selectedRuleCategory, setSelectedRuleCategory] = useState<"all" | "public" | "authorised" | "private">("all");
   const [activeMilestoneYear, setActiveMilestoneYear] = useState<number | null>(2015);
+  const [showHeroPagesModal, setShowHeroPagesModal] = useState(false);
 
   const handleNavigate = (pageId: string, href: string) => {
     setLoadingTransition(true);
@@ -134,8 +135,24 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
               </p>
             </div>
 
-            {/* CTA Button: Full width on mobile */}
-            <div className="pt-1 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+            {/* CTA Buttons: Full width on mobile with prominent vibrating Pages button */}
+            <div className="pt-1 flex flex-col sm:flex-row items-center justify-center gap-2.5 w-full">
+              {/* Highlighted & Vibrating Pop-up Pages Button */}
+              <button
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent("open-pages-menu"));
+                  setShowHeroPagesModal(true);
+                }}
+                className="w-full sm:w-auto px-5 py-2.5 sm:px-7 sm:py-3 rounded-full bg-gradient-to-r from-emerald-500 via-lime-400 to-emerald-500 text-stone-950 font-black text-xs sm:text-sm tracking-wide shadow-[0_0_20px_rgba(52,211,153,0.75)] active:scale-95 transition-all cursor-pointer border-2 border-emerald-200 animate-vibrate-pop flex items-center justify-center gap-2"
+                aria-label="Open Pages menu"
+              >
+                <span className="w-2 h-2 rounded-full bg-stone-900 animate-ping shrink-0" />
+                <span>Pages 🧭</span>
+                <span className="px-2 py-0.5 rounded-full bg-stone-900 text-emerald-300 text-[10px] font-mono font-bold shadow-sm">
+                  Explore All
+                </span>
+              </button>
+
               <button
                 onClick={() => handleNavigate("denim", "/denim-blue.html")}
                 className="w-full sm:w-auto px-6 py-2.5 sm:px-8 sm:py-3 rounded-full bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg active:scale-95 transition-all cursor-pointer border-2 border-blue-400 flex items-center justify-center gap-2"
@@ -272,18 +289,18 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
           </div>
         </section>
 
-        {/* SECTION 4: CONSECUTIVE YEAR MILESTONE TIMELINE */}
-        <section className="w-full space-y-3.5 sm:space-y-6">
-          <div className="text-center max-w-3xl mx-auto space-y-1 px-1">
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-rose-900 text-rose-100 text-[10px] sm:text-xs font-mono font-bold">
+        {/* SECTION 4: CONSECUTIVE YEAR MILESTONE TIMELINE - PEACH BACKGROUND SECTION ONLY */}
+        <section className="w-full p-4 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-[#ffe5b4] border-2 sm:border-3 border-[#fbb88e] shadow-md space-y-4 sm:space-y-6 relative overflow-hidden">
+          <div className="text-center max-w-3xl mx-auto space-y-1.5 px-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#8c2d19] text-amber-50 text-[10px] sm:text-xs font-mono font-bold shadow-sm">
               <span>Chronological Chronicles</span>
               <span>•</span>
               <span>2015 → 2026</span>
             </div>
-            <h2 className="text-lg sm:text-3xl font-serif font-black text-[#3a0518]">
+            <h2 className="text-lg sm:text-3xl font-serif font-black text-[#5c1d10]">
               Consecutive Key Milestones
             </h2>
-            <p className="text-[11px] sm:text-xs text-stone-700 font-medium">
+            <p className="text-[11px] sm:text-xs text-[#7c2d12] font-semibold">
               Every single year wrote an indelible line in Lime Green 💚. Tap any year to explore its memories.
             </p>
           </div>
@@ -296,10 +313,10 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                 <button
                   key={m.year}
                   onClick={() => setActiveMilestoneYear(m.year)}
-                  className={`px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-mono font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                  className={`px-2.5 py-1 sm:px-3.5 sm:py-1 rounded-full text-xs font-mono font-bold whitespace-nowrap transition-colors cursor-pointer shadow-sm ${
                     isSelected
-                      ? "bg-rose-700 text-white shadow-sm border border-rose-800"
-                      : "bg-white text-stone-800 hover:bg-rose-100 border border-rose-300"
+                      ? "bg-[#c2410c] text-white border border-[#9a3412]"
+                      : "bg-white/95 text-stone-800 hover:bg-[#ffedd5] border border-[#fdba74]"
                   }`}
                 >
                   {m.year}
@@ -309,43 +326,43 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
           </div>
 
           {/* Timeline Track: Clean responsive margins, zero dot cutoffs */}
-          <div className="relative border-l-2 border-rose-400 ml-3 sm:ml-8 pl-3.5 sm:pl-7 space-y-3 sm:space-y-4">
+          <div className="relative border-l-2 border-[#ea580c] ml-3 sm:ml-8 pl-3.5 sm:pl-7 space-y-3 sm:space-y-4">
             {MILESTONES.map((milestone) => {
               const isActive = activeMilestoneYear === milestone.year;
               return (
                 <div
                   key={milestone.year}
                   onClick={() => setActiveMilestoneYear(milestone.year)}
-                  className={`relative p-3 sm:p-5 rounded-xl transition-all duration-150 cursor-pointer ${
+                  className={`relative p-3.5 sm:p-5 rounded-xl transition-all duration-150 cursor-pointer ${
                     isActive
-                      ? "bg-white border-2 border-rose-600 shadow-sm ring-1 ring-rose-300"
-                      : "bg-white/70 border border-rose-200 hover:border-rose-400 hover:bg-white"
+                      ? "bg-white border-2 border-[#ea580c] shadow-md ring-2 ring-[#fdba74]"
+                      : "bg-white/90 border border-[#fed7aa] hover:border-[#fb923c] hover:bg-white"
                   }`}
                 >
                   {/* Timeline dot cleanly centered on border-l line */}
                   <div
                     className={`absolute -left-[21px] sm:-left-[35px] top-4 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 transition-all ${
                       isActive
-                        ? "bg-rose-600 border-white shadow-sm scale-110"
-                        : "bg-rose-300 border-rose-500"
+                        ? "bg-[#ea580c] border-white shadow-sm scale-110"
+                        : "bg-[#fed7aa] border-[#ea580c]"
                     }`}
                   />
 
                   <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-base sm:text-2xl font-serif font-black text-rose-800">
+                      <span className="text-base sm:text-2xl font-serif font-black text-[#9a3412]">
                         {milestone.year}
                       </span>
-                      <span className="text-[9px] sm:text-xs font-mono px-2 py-0.5 rounded-full bg-rose-100 border border-rose-300 text-rose-900 font-bold">
+                      <span className="text-[9px] sm:text-xs font-mono px-2 py-0.5 rounded-full bg-[#ffedd5] border border-[#fdba74] text-[#9a3412] font-bold">
                         {milestone.highlightTag}
                       </span>
                     </div>
-                    <span className="text-[10px] sm:text-xs text-amber-900 font-mono font-bold">
+                    <span className="text-[10px] sm:text-xs text-[#7c2d12] font-mono font-bold">
                       {milestone.emotion}
                     </span>
                   </div>
 
-                  <h3 className="text-sm sm:text-base font-serif text-[#3b0518] font-bold mb-0.5">
+                  <h3 className="text-sm sm:text-base font-serif text-[#431407] font-bold mb-0.5">
                     {milestone.title}
                   </h3>
                   <p className="text-[11px] sm:text-xs text-stone-600 italic font-medium mb-1">
@@ -357,7 +374,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                   </p>
 
                   {milestone.archivedRuleRef && (
-                    <div className="mt-2 pt-1.5 border-t border-rose-100 flex items-center justify-between text-[10px] sm:text-xs text-stone-700 font-semibold">
+                    <div className="mt-2 pt-1.5 border-t border-[#fed7aa] flex items-center justify-between text-[10px] sm:text-xs text-stone-700 font-semibold">
                       <span>Associated Code:</span>
                       <span className="font-mono text-emerald-800 font-bold">
                         {milestone.archivedRuleRef === 1
@@ -530,6 +547,119 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
 
       {/* MINIMALIST ORANGE FOOTER */}
       <Footer onNavigate={(pageId, href) => handleNavigate(pageId, href)} />
+
+      {/* HERO PAGES MODAL / SHEET */}
+      {showHeroPagesModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-md bg-[#1e232d] text-white rounded-3xl p-5 sm:p-6 border-2 border-emerald-400 shadow-2xl space-y-4">
+            
+            <div className="flex items-center justify-between pb-3 border-b border-[#374151]">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">🧭</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold font-serif text-emerald-300">
+                    Explore Lime Green Pages
+                  </h3>
+                  <p className="text-[11px] text-stone-300">
+                    Switch between active experiences
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowHeroPagesModal(false)}
+                className="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white flex items-center justify-center font-bold cursor-pointer"
+                aria-label="Close modal"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-2.5">
+              <button
+                onClick={() => {
+                  setShowHeroPagesModal(false);
+                  handleNavigate("red", "/index.html");
+                }}
+                className="w-full p-3 rounded-2xl bg-rose-900/80 hover:bg-rose-800 border border-rose-500 text-left flex items-center justify-between cursor-pointer transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🌸</span>
+                  <div>
+                    <h4 className="font-bold text-sm text-white">Limegreen</h4>
+                    <p className="text-[10px] text-rose-200">2015–2026 Key Milestones & 803 Rules</p>
+                  </div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-stone-950 font-bold text-[10px]">
+                  Current
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowHeroPagesModal(false);
+                  handleNavigate("denim", "/denim-blue.html");
+                }}
+                className="w-full p-3 rounded-2xl bg-blue-950/80 hover:bg-blue-900 border border-blue-500 text-left flex items-center justify-between cursor-pointer transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">👖</span>
+                  <div>
+                    <h4 className="font-bold text-sm text-white">Denim Blue</h4>
+                    <p className="text-[10px] text-blue-200">User Profiles & Affinity Calculator</p>
+                  </div>
+                </div>
+                <span className="text-blue-400 font-bold text-sm">→</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowHeroPagesModal(false);
+                  handleNavigate("magenta", "/magenta.html");
+                }}
+                className="w-full p-3 rounded-2xl bg-fuchsia-950/80 hover:bg-fuchsia-900 border border-fuchsia-500 text-left flex items-center justify-between cursor-pointer transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🟣</span>
+                  <div>
+                    <h4 className="font-bold text-sm text-white">Magenta (TBC 💚)</h4>
+                    <p className="text-[10px] text-fuchsia-200">The 18 Chapters & Confidential Codex</p>
+                  </div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-amber-400 text-stone-950 font-bold text-[10px]">
+                  TBC
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowHeroPagesModal(false);
+                  handleNavigate("yellow", "/yellow-autumn.html");
+                }}
+                className="w-full p-3 rounded-2xl bg-amber-950/80 hover:bg-amber-900 border border-amber-500 text-left flex items-center justify-between cursor-pointer transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🍂</span>
+                  <div>
+                    <h4 className="font-bold text-sm text-white">Yellow Autumn</h4>
+                    <p className="text-[10px] text-amber-200">The Dry Leaf of 2015 & Autumn Archives</p>
+                  </div>
+                </div>
+                <span className="text-amber-400 font-bold text-sm">→</span>
+              </button>
+            </div>
+
+            <div className="pt-2 text-center">
+              <button
+                onClick={() => setShowHeroPagesModal(false)}
+                className="px-5 py-1.5 rounded-full bg-stone-800 hover:bg-stone-700 text-xs font-semibold text-stone-300 cursor-pointer"
+              >
+                Close Menu
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 };

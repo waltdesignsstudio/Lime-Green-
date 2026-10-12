@@ -14,8 +14,8 @@ export const FixedMusicControl: React.FC = () => {
     };
   }, []);
 
-  const handleToggle = (e: React.MouseEvent) => {
-    e.stopPropagation(); // prevent bubbling to document
+  const handleToggle = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
     musicEngine.toggle();
   };
 

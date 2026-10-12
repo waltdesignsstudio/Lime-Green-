@@ -90,7 +90,7 @@ export const MagentaTBC: React.FC<MagentaTBCProps> = ({ onNavigatePage }) => {
             <span className="w-2 h-2 rounded-full bg-fuchsia-300 animate-ping" />
             <span>Chapter Magenta (TBC 💚)</span>
             <span className="text-fuchsia-300">•</span>
-            <span className="text-emerald-300">Light Magenta Atmosphere</span>
+            <span className="text-emerald-300">Confidential Codex</span>
           </div>
 
           {/* Central Dry Leaf Showcase */}

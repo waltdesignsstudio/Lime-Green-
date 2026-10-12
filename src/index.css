@@ -41,6 +41,39 @@
   animation-play-state: paused;
 }
 
+/* Vibrating pop-up highlight animation for mobile Pages button */
+@keyframes vibratePop {
+  0% {
+    transform: scale(0.96) translate(0, 0);
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  }
+  20% {
+    transform: scale(1.05) translate(-1.5px, 1px);
+    box-shadow: 0 0 16px rgba(52, 211, 153, 0.7);
+  }
+  40% {
+    transform: scale(1.02) translate(1.5px, -1px);
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+  }
+  60% {
+    transform: scale(1.06) translate(-1px, -1.5px);
+    box-shadow: 0 0 18px rgba(16, 185, 129, 0.8);
+  }
+  80% {
+    transform: scale(1.01) translate(1px, 1.5px);
+    box-shadow: 0 0 12px rgba(52, 211, 153, 0.5);
+  }
+  100% {
+    transform: scale(1.04) translate(0, 0);
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.85);
+  }
+}
+
+.animate-vibrate-pop {
+  animation: vibratePop 1.6s ease-in-out infinite alternate;
+  will-change: transform, box-shadow;
+}
+
 /* Hide scrollbar for clean horizontal tab bars */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

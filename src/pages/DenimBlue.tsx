@@ -72,7 +72,7 @@ export const DenimBlue: React.FC<DenimBlueProps> = ({ onNavigatePage }) => {
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
             <span>Denim Blue Domain</span>
             <span className="text-blue-300">•</span>
-            <span className="text-emerald-300">Light Cyan Atmosphere</span>
+            <span className="text-emerald-300">Truth & Resonance</span>
           </div>
 
           <h1 className="text-xl sm:text-4xl md:text-5xl font-serif font-black text-[#0c2e4e] drop-shadow-sm break-words px-1">

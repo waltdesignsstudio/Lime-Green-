@@ -20,10 +20,16 @@ export const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  React.useEffect(() => {
+    const handleOpenMenu = () => setMobileMenuOpen(true);
+    window.addEventListener("open-pages-menu", handleOpenMenu);
+    return () => window.removeEventListener("open-pages-menu", handleOpenMenu);
+  }, []);
+
   const links = [
     {
       id: "red",
-      label: "Red (Home)",
+      label: "Limegreen",
       href: "/index.html",
       activeBg: "bg-rose-700 text-white border-rose-500 shadow-sm",
       inactiveColor: "text-stone-300 hover:text-white hover:bg-white/10",
@@ -138,14 +144,21 @@ export const Navigation: React.FC<NavigationProps> = ({
               })}
             </nav>
 
-            {/* Mobile Menu Toggle Button */}
+            {/* Mobile Menu Toggle Button: Highlighted, vibrating pop-up animation */}
             <div className="flex items-center md:hidden shrink-0">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="px-2.5 py-1.5 rounded-lg bg-[#374151] border border-[#6b7280] text-xs font-medium text-stone-100 cursor-pointer active:scale-95 transition-transform"
+                className={`relative px-3 py-1.5 rounded-xl font-bold text-xs tracking-wide cursor-pointer transition-all active:scale-95 flex items-center gap-1.5 shadow-md ${
+                  mobileMenuOpen
+                    ? "bg-[#374151] border border-stone-400 text-stone-100"
+                    : "bg-gradient-to-r from-emerald-500 via-lime-400 to-emerald-500 text-stone-950 border-2 border-emerald-200 animate-vibrate-pop shadow-[0_0_15px_rgba(52,211,153,0.7)]"
+                }`}
                 aria-label="Toggle navigation menu"
               >
-                {mobileMenuOpen ? "✕ Close" : "Pages 🧭"}
+                {!mobileMenuOpen && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-stone-900 animate-ping shrink-0" />
+                )}
+                <span>{mobileMenuOpen ? "✕ Close" : "Pages 🧭"}</span>
               </button>
             </div>
 

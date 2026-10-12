@@ -11,7 +11,7 @@ export const MUSIC_TITLE = "A Deep Fall near Indus";
 export const MARQUEE_TEXT = '"Welcome to Lime Green 💚" Some stories stay incomplete...';
 
 export const NAV_LINKS = [
-  { id: "red", label: "Red (Home)", href: "/index.html", color: "from-rose-600 to-red-800" },
+  { id: "red", label: "Limegreen", href: "/index.html", color: "from-rose-600 to-red-800" },
   { id: "denim", label: "Denim Blue", href: "/denim-blue.html", color: "from-blue-600 to-indigo-800" },
   { id: "magenta", label: "Magenta (TBC 💚)", href: "/magenta.html", color: "from-pink-600 to-fuchsia-900" },
   { id: "yellow", label: "Yellow Autumn", href: "/yellow-autumn.html", color: "from-amber-500 to-yellow-800" },

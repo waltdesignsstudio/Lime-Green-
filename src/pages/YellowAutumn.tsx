@@ -115,7 +115,7 @@ export const YellowAutumn: React.FC<YellowAutumnProps> = ({ onNavigatePage }) =>
             <span className="w-2 h-2 rounded-full bg-yellow-400 animate-ping" />
             <span>Autumn Season Gateway</span>
             <span className="text-amber-300">•</span>
-            <span className="text-emerald-300">Light Golden Atmosphere</span>
+            <span className="text-emerald-300">Preserved Leaves</span>
           </div>
 
           {/* Central Dry Leaf Showcase */}

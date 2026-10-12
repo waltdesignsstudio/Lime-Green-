@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             onClick={() => handleNav("red", "/index.html")}
             className="hover:underline hover:text-orange-100 transition-colors cursor-pointer"
           >
-            Red (Home)
+            Limegreen
           </button>
           <span className="text-orange-300">•</span>
           <button
