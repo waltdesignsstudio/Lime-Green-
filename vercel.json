@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/denim-blue", "destination": "/denim-blue.html" },
+    { "source": "/magenta", "destination": "/magenta.html" },
+    { "source": "/yellow-autumn", "destination": "/yellow-autumn.html" },
+    { "source": "/", "destination": "/index.html" }
+  ]
+}
