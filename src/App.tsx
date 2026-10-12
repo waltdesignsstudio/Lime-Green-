@@ -4,6 +4,7 @@ import { DenimBlue } from "./pages/DenimBlue";
 import { MagentaTBC } from "./pages/MagentaTBC";
 import { YellowAutumn } from "./pages/YellowAutumn";
 import { PageTransitionLoader } from "./components/PageTransitionLoader";
+import { FirstTimeVisitorPopup } from "./components/FirstTimeVisitorPopup";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<"red" | "denim" | "magenta" | "yellow">(() => {
@@ -59,6 +60,7 @@ export default function App() {
 
   return (
     <>
+      <FirstTimeVisitorPopup />
       <PageTransitionLoader isLoading={isTransitioning} />
       {currentPage === "red" && <RedHome onNavigatePage={handleNavigate} />}
       {currentPage === "denim" && <DenimBlue onNavigatePage={handleNavigate} />}
