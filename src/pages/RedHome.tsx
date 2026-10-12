@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
 import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
 import { AutumnLeavesFrame } from "../components/AutumnLeavesFrame";
@@ -22,9 +21,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
   const [selectedRuleCategory, setSelectedRuleCategory] = useState<"all" | "public" | "authorised" | "private">("all");
   const [activeMilestoneYear, setActiveMilestoneYear] = useState<number | null>(2015);
 
-  const { scrollY } = useScroll();
-  const heroParallaxY = useTransform(scrollY, [0, 600], [0, 35]);
-
   const handleNavigate = (pageId: string, href: string) => {
     setLoadingTransition(true);
     setTimeout(() => {
@@ -33,7 +29,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
       } else {
         window.location.href = href;
       }
-    }, 700);
+    }, 550);
   };
 
   const filteredRules = selectedRuleCategory === "all"
@@ -41,29 +37,29 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
     : RULES_DATA.filter((r) => r.category === selectedRuleCategory);
 
   return (
-    // Red whole page bg: Baby Pink
-    <div className="relative min-h-screen bg-[#ffe4e6] text-[#2d0a15] overflow-x-hidden selection:bg-rose-500 selection:text-white">
-      {/* Page Transition overlay (keeps original stationary yellow leaf logo) */}
+    // Red page: Baby Pink background, covers full screen smoothly with zero lag
+    <div className="relative min-h-screen w-full bg-[#ffe4e6] text-[#2d0a15] overflow-x-hidden selection:bg-rose-500 selection:text-white">
+      {/* Page Transition overlay */}
       <PageTransitionLoader isLoading={loadingTransition} />
 
       {/* Single Fixed Play/Pause music button */}
       <FixedMusicControl />
 
-      {/* Detailed realistic yellow drifting leaves and continuous side leaf borders with NO gaps */}
+      {/* Zero-lag hardware accelerated Autumn Leaves */}
       <AutumnLeavesFrame fillSides={true} intensity="normal" />
 
-      {/* Global Navigation Header with Silver Shiny Creamy Dark BG & Marquee */}
+      {/* Header & Marquee */}
       <Navigation
         currentPage="red"
         onNavigate={(pageId, href) => handleNavigate(pageId, href)}
         showMarquee={true}
       />
 
-      {/* MAIN CONTENT CONTAINER */}
-      <main className="relative z-20 px-6 sm:px-12 md:px-20 lg:px-28 max-w-7xl mx-auto space-y-24 pt-6">
+      {/* MAIN CONTAINER: Covers full screen on mobile, zero overlap, smooth 60fps scrolling */}
+      <main className="relative z-20 w-full max-w-7xl mx-auto px-2 sm:px-6 md:px-12 lg:px-20 space-y-4 sm:space-y-12 md:space-y-16 pt-2 sm:pt-6 pb-24 sm:pb-16">
 
-        {/* HERO SECTION: Baby Pink base + Transparent Autumn Trees Background */}
-        <section className="relative min-h-[85vh] flex flex-col justify-center items-center text-center pt-8 pb-14 rounded-3xl overflow-hidden shadow-sm border border-rose-200 bg-white/40 backdrop-blur-sm">
+        {/* HERO SECTION: Full width coverage, clean responsive hierarchy */}
+        <section className="relative w-full flex flex-col justify-center items-center text-center py-5 sm:py-12 md:py-16 px-2.5 sm:px-6 rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm border border-rose-200/90 bg-white/60 backdrop-blur-[2px]">
           
           {/* Transparent Autumn Trees Background */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
@@ -71,26 +67,24 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
               src={AUTUMN_TREES_BG}
               alt="Autumn Trees Backdrop"
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-center opacity-35 mix-blend-multiply filter contrast-120 saturate-110"
+              className="w-full h-full object-cover object-center opacity-25 mix-blend-multiply"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-[#ffe4e6]/30 via-transparent to-[#ffe4e6]/80" />
           </div>
 
           {/* Central Hero Content */}
-          <motion.div
-            style={{ y: heroParallaxY }}
-            className="relative z-10 max-w-4xl mx-auto space-y-6 px-4"
-          >
-            {/* Since 2015 Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-rose-900 text-rose-50 text-xs sm:text-sm font-mono shadow-md border border-rose-700">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+          <div className="relative z-10 w-full max-w-4xl mx-auto space-y-3 sm:space-y-5">
+            
+            {/* Since 2015 Badge: wraps neatly on narrow mobile */}
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 px-3 py-1 rounded-full bg-rose-900 text-rose-50 text-[11px] sm:text-xs font-mono shadow-md border border-rose-700">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
               <span className="font-bold">Since : 2015</span>
               <span className="text-rose-300">•</span>
               <span className="text-amber-300 font-sans font-semibold">11+ Years of Preserved Moments</span>
             </div>
 
-            {/* Central Hero Logo: Replaced with New Logo as requested */}
-            <div className="flex justify-center my-3">
+            {/* Central Hero Logo */}
+            <div className="flex justify-center my-1.5 sm:my-3">
               <a
                 href={LOGO_HREF}
                 target="_blank"
@@ -98,151 +92,139 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                 className="relative group cursor-pointer block"
                 title="Lime Green Official Emblem"
               >
-                <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl overflow-hidden p-1.5 bg-gradient-to-br from-[#d1d5db] via-rose-200 to-amber-300 border-3 border-[#9ca3af] shadow-2xl group-hover:scale-105 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl sm:rounded-3xl overflow-hidden p-1 bg-gradient-to-br from-[#d1d5db] via-rose-200 to-amber-300 border-2 sm:border-3 border-[#9ca3af] shadow-lg group-hover:scale-105 transition-transform duration-200">
                   <img
                     src={LOGO_IMAGE_URL}
                     alt="Whats-App-Image-2026-10-12-at-11-58-31"
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover rounded-2xl filter contrast-105"
+                    className="w-full h-full object-cover rounded-xl sm:rounded-2xl"
                   />
                 </div>
-                <span className="absolute -bottom-3 -right-2 px-3 py-0.5 rounded-full bg-stone-900 border border-emerald-400 text-[10px] text-emerald-300 font-mono shadow font-bold">
-                  Official Emblem 💚
+                <span className="absolute -bottom-2 -right-1 px-2 py-0.5 rounded-full bg-stone-900 border border-emerald-400 text-[9px] sm:text-[10px] text-emerald-300 font-mono shadow font-bold">
+                  Emblem 💚
                 </span>
               </a>
             </div>
 
-            {/* Animated Hero Text: "Some stories stay incomplete 🙃 ~" */}
-            <div className="overflow-hidden py-1">
-              <motion.h1
-                initial={{ y: 35, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.9, ease: "easeOut" }}
-                className="text-3xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight text-[#4a041f] drop-shadow-sm"
-              >
-                “Some stories stay incomplete 🙃 ~”
-              </motion.h1>
-            </div>
+            {/* Hero Heading: animated text appearance */}
+            <h1 className="text-xl sm:text-4xl md:text-5xl font-serif font-black tracking-tight text-[#4a041f] drop-shadow-sm leading-snug break-words px-1 animate-fadeIn">
+              “Some stories stay incomplete 🙃 ~”
+            </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-xl text-[#6b1430] max-w-2xl mx-auto font-medium leading-relaxed tracking-wide">
+            <p className="text-xs sm:text-base md:text-lg text-[#6b1430] max-w-2xl mx-auto font-medium leading-relaxed tracking-wide px-1 break-words">
               {SITE_SUBTITLE}
             </p>
 
-            {/* UPCOMING INCIDENT : The Left & the Indus as requested */}
-            <div className="max-w-xl mx-auto p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-stone-900 via-[#1e2430] to-stone-900 border-2 border-amber-400/80 text-white shadow-xl space-y-1.5 text-center">
-              <div className="flex items-center justify-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-300">
+            {/* UPCOMING INCIDENT: The Left & the Indus */}
+            <div className="w-full max-w-xl mx-auto p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-stone-900 via-[#1e2430] to-stone-900 border-2 border-amber-400/80 text-white shadow-xl space-y-1 text-center">
+              <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping shrink-0" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest text-amber-300">
                   Upcoming Incident
                 </span>
                 <span className="text-stone-400">•</span>
-                <span className="text-xs font-mono text-emerald-300">Classified Event</span>
+                <span className="text-[10px] sm:text-xs font-mono text-emerald-300">Classified Event</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-200 to-sky-200">
+              <h3 className="text-sm sm:text-lg font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-200 to-sky-200">
                 The Left & the Indus
               </h3>
-              <p className="text-xs sm:text-sm text-stone-300 font-light italic max-w-md mx-auto">
+              <p className="text-[11px] sm:text-xs text-stone-300 font-light italic max-w-md mx-auto leading-relaxed">
                 “Where the left fork departs into silence and the ancient waters of the Indus carry away what could never be spoken.”
               </p>
             </div>
 
-            {/* CTA Button: 'discover my past' -> Redirects to Denim Blue */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* CTA Button: Full width on mobile */}
+            <div className="pt-1 flex flex-col sm:flex-row items-center justify-center gap-2.5">
               <button
                 onClick={() => handleNavigate("denim", "/denim-blue.html")}
-                className="group relative px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white font-bold text-sm sm:text-base tracking-wide shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border-2 border-blue-400 flex items-center gap-3"
+                className="w-full sm:w-auto px-6 py-2.5 sm:px-8 sm:py-3 rounded-full bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg active:scale-95 transition-all cursor-pointer border-2 border-blue-400 flex items-center justify-center gap-2"
               >
                 <span>discover my past</span>
-                <span className="group-hover:translate-x-1.5 transition-transform duration-200 text-lg">
-                  →
-                </span>
-                <span className="absolute -top-2.5 -right-2 px-2 py-0.5 rounded-full bg-emerald-500 text-black text-[10px] font-black font-mono tracking-wider shadow">
+                <span className="text-sm sm:text-base">→</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-black text-[9px] font-black font-mono tracking-wider shadow">
                   Denim Blue
                 </span>
               </button>
             </div>
 
             {/* Scroll Indicator */}
-            <div className="pt-4 text-rose-800 font-semibold text-xs flex flex-col items-center gap-1 select-none">
-              <span>Scroll down to unveil the 2015–2026 Timeline, 803 Rules & 18 Chapters</span>
-              <span className="text-base animate-bounce">↓</span>
+            <div className="pt-1 text-rose-800 font-semibold text-[10px] sm:text-xs flex flex-col items-center gap-0.5 select-none">
+              <span>Scroll down to explore 2015–2026 Milestones, 803 Rules & 18 Chapters</span>
+              <span className="text-xs sm:text-sm animate-bounce">↓</span>
             </div>
 
-          </motion.div>
+          </div>
         </section>
 
         {/* SECTION 1: EMOTIVE QUOTE CARD */}
-        <section className="relative">
-          <div className="p-8 sm:p-12 rounded-3xl bg-white/85 border-2 border-rose-300 shadow-xl relative overflow-hidden text-center max-w-4xl mx-auto backdrop-blur-md">
-            <div className="absolute top-4 right-6 text-3xl opacity-30 select-none">🌹😐</div>
-            <div className="absolute bottom-4 left-6 text-3xl opacity-30 select-none">😶🥀</div>
-
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 border border-rose-400 text-rose-900 text-xs font-mono font-bold mb-6">
+        <section className="w-full">
+          <div className="w-full p-3.5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/90 border-2 border-rose-300 shadow-sm text-center max-w-4xl mx-auto space-y-2.5 sm:space-y-4">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-rose-100 border border-rose-400 text-rose-900 text-[10px] sm:text-xs font-mono font-bold">
               <span>The Attachment Paradox</span>
               <span>•</span>
               <span>Loyalty Query</span>
             </div>
 
-            <blockquote className="text-xl sm:text-2xl md:text-3xl font-serif text-[#4a041f] font-bold leading-relaxed italic mb-6">
+            <blockquote className="text-sm sm:text-xl md:text-2xl font-serif text-[#4a041f] font-bold leading-relaxed italic break-words px-1">
               “Some Loves,friendships,attachment & attractions never forgotablle until they stay...Is this called Loyalty or not 🙃 ???”
             </blockquote>
 
-            <div className="flex items-center justify-center gap-3 text-2xl sm:text-3xl select-none">
-              <span className="hover:scale-125 transition-transform" title="Rose 🌹">🌹</span>
-              <span className="hover:scale-125 transition-transform" title="Emotionless 😐">😐</span>
-              <span className="hover:scale-125 transition-transform" title="Emotionless 😶">😶</span>
-              <span className="hover:scale-125 transition-transform" title="Upside down 🙃">🙃</span>
+            <div className="flex items-center justify-center gap-2.5 text-lg sm:text-2xl select-none">
+              <span title="Rose 🌹">🌹</span>
+              <span title="Emotionless 😐">😐</span>
+              <span title="Emotionless 😶">😶</span>
+              <span title="Upside down 🙃">🙃</span>
             </div>
             
-            <p className="text-xs sm:text-sm text-stone-700 mt-4 max-w-xl mx-auto font-medium">
+            <p className="text-[11px] sm:text-xs text-stone-700 max-w-lg mx-auto font-medium">
               Do we hold onto the person, or the version of ourselves that existed when they were still here?
             </p>
           </div>
         </section>
 
         {/* SECTION 2: LORE & ESSENCE OF LIME GREEN */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+        <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5 items-stretch">
           
-          <div className="p-8 rounded-3xl bg-white/90 border-2 border-emerald-400 shadow-lg flex flex-col justify-between relative group hover:shadow-xl transition-all">
+          <div className="w-full p-3.5 sm:p-6 rounded-2xl bg-white/90 border-2 border-emerald-400 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-2xl">💚🍵</span>
-                <span className="text-xs font-mono font-bold text-emerald-800 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-400">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-lg sm:text-xl">💚🍵</span>
+                <span className="text-[10px] sm:text-xs font-mono font-bold text-emerald-800 px-2 py-0.5 rounded-full bg-emerald-100 border border-emerald-400">
                   Core Essence
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-serif text-emerald-950 font-bold mb-4 leading-snug">
+              <h3 className="text-base sm:text-xl font-serif text-emerald-950 font-bold mb-1.5 leading-snug">
                 The Circle Beyond Individuals
               </h3>
-              <p className="text-stone-800 text-sm sm:text-base leading-relaxed font-medium">
+              <p className="text-stone-800 text-xs sm:text-sm leading-relaxed font-medium">
                 “Lime Green 💚, is not based on a single person but a collection of cherished moments shared with a group of friends or else???”
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-emerald-100 text-xs text-stone-600 font-semibold flex items-center justify-between">
+            <div className="mt-3 pt-2 border-t border-emerald-100 text-[11px] text-stone-600 font-semibold flex items-center justify-between">
               <span>Origin: Autumn 2015</span>
               <span className="text-emerald-700 font-mono">Bound by Memory</span>
             </div>
           </div>
 
-          <div className="p-8 rounded-3xl bg-white/90 border-2 border-amber-400 shadow-lg flex flex-col justify-between relative group hover:shadow-xl transition-all">
+          <div className="w-full p-3.5 sm:p-6 rounded-2xl bg-white/90 border-2 border-amber-400 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-2xl">📜🔏</span>
-                <span className="text-xs font-mono font-bold text-amber-900 px-3 py-1 rounded-full bg-amber-100 border border-amber-400">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-lg sm:text-xl">📜🔏</span>
+                <span className="text-[10px] sm:text-xs font-mono font-bold text-amber-900 px-2 py-0.5 rounded-full bg-amber-100 border border-amber-400">
                   The Archive
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-serif text-amber-950 font-bold mb-4 leading-snug">
+              <h3 className="text-base sm:text-xl font-serif text-amber-950 font-bold mb-1.5 leading-snug">
                 Rules & The 18 Chapters
               </h3>
-              <p className="text-stone-800 text-sm sm:text-base leading-relaxed font-medium">
+              <p className="text-stone-800 text-xs sm:text-sm leading-relaxed font-medium">
                 “Lime Green 💚 contains of total 803 rules, while some are private,some are authorised & some are Public...Still Current of 18 Chapters..(some founded & some lost :)”
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-amber-100 text-xs text-stone-600 font-semibold flex items-center justify-between">
+            <div className="mt-3 pt-2 border-t border-amber-100 text-[11px] text-stone-600 font-semibold flex items-center justify-between">
               <span>Categories: Public • Auth • Private</span>
               <span className="text-amber-800 font-mono font-bold">Current 18 Chapters</span>
             </div>
@@ -251,72 +233,72 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
         </section>
 
         {/* SECTION 3: LIVE STATS COUNTER BAR */}
-        <section className="relative">
-          <div className="p-6 sm:p-8 rounded-3xl bg-white/90 border-2 border-rose-300 shadow-xl">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+        <section className="w-full">
+          <div className="w-full p-3.5 sm:p-6 rounded-2xl bg-white/90 border-2 border-rose-300 shadow-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4 text-center">
               
-              <div className="p-5 rounded-2xl bg-rose-50 border-2 border-rose-200 flex flex-col items-center justify-center">
-                <span className="text-xs uppercase font-mono tracking-widest text-rose-800 font-bold flex items-center gap-2 mb-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+              <div className="p-3 sm:p-4 rounded-xl bg-rose-50 border border-rose-200 flex flex-col items-center justify-center">
+                <span className="text-[10px] sm:text-xs uppercase font-mono tracking-wider text-rose-800 font-bold flex items-center gap-1 mb-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                   Status
                 </span>
-                <span className="text-3xl sm:text-4xl font-serif font-black text-rose-900">
+                <span className="text-2xl sm:text-3xl font-serif font-black text-rose-900">
                   Live
                 </span>
-                <span className="text-xs text-stone-600 font-medium mt-1">Real-time Memory Stream</span>
+                <span className="text-[10px] text-stone-600 font-medium mt-0.5">Real-time Memory Stream</span>
               </div>
 
-              <div className="p-5 rounded-2xl bg-amber-50 border-2 border-amber-200 flex flex-col items-center justify-center">
-                <span className="text-xs uppercase font-mono tracking-widest text-amber-900 font-bold mb-1">
+              <div className="p-3 sm:p-4 rounded-xl bg-amber-50 border border-amber-200 flex flex-col items-center justify-center">
+                <span className="text-[10px] sm:text-xs uppercase font-mono tracking-wider text-amber-900 font-bold mb-0.5">
                   Total Tenets
                 </span>
-                <span className="text-3xl sm:text-4xl font-serif font-black text-amber-900">
+                <span className="text-2xl sm:text-3xl font-serif font-black text-amber-900">
                   Rules : 803
                 </span>
-                <span className="text-xs text-stone-600 font-medium mt-1">Public, Authorised & Private</span>
+                <span className="text-[10px] text-stone-600 font-medium mt-0.5">Public, Authorised & Private</span>
               </div>
 
-              <div className="p-5 rounded-2xl bg-blue-50 border-2 border-blue-200 flex flex-col items-center justify-center">
-                <span className="text-xs uppercase font-mono tracking-widest text-blue-900 font-bold mb-1">
+              <div className="p-3 sm:p-4 rounded-xl bg-blue-50 border border-blue-200 flex flex-col items-center justify-center">
+                <span className="text-[10px] sm:text-xs uppercase font-mono tracking-wider text-blue-900 font-bold mb-0.5">
                   Living Roster
                 </span>
-                <span className="text-3xl sm:text-4xl font-serif font-black text-blue-900">
+                <span className="text-2xl sm:text-3xl font-serif font-black text-blue-900">
                   Chapters : 18
                 </span>
-                <span className="text-xs text-stone-600 font-medium mt-1">Some founded & some lost :)</span>
+                <span className="text-[10px] text-stone-600 font-medium mt-0.5">Some founded & some lost :)</span>
               </div>
 
             </div>
           </div>
         </section>
 
-        {/* SECTION 4: CONSECUTIVE YEAR MILESTONE TIMELINE (2015 to 2026) */}
-        <section className="space-y-10">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-900 text-rose-100 text-xs font-mono font-bold">
+        {/* SECTION 4: CONSECUTIVE YEAR MILESTONE TIMELINE */}
+        <section className="w-full space-y-3.5 sm:space-y-6">
+          <div className="text-center max-w-3xl mx-auto space-y-1 px-1">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-rose-900 text-rose-100 text-[10px] sm:text-xs font-mono font-bold">
               <span>Chronological Chronicles</span>
               <span>•</span>
               <span>2015 → 2026</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-serif font-black text-[#3a0518]">
+            <h2 className="text-lg sm:text-3xl font-serif font-black text-[#3a0518]">
               Consecutive Key Milestones
             </h2>
-            <p className="text-sm text-stone-700 font-medium">
-              Every single year wrote an indelible line in Lime Green 💚. Click any year to explore its memories.
+            <p className="text-[11px] sm:text-xs text-stone-700 font-medium">
+              Every single year wrote an indelible line in Lime Green 💚. Tap any year to explore its memories.
             </p>
           </div>
 
-          {/* Year selector pills */}
-          <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-3 no-scrollbar">
+          {/* Year selector tabs */}
+          <div className="w-full flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto pb-1.5 no-scrollbar px-1">
             {MILESTONES.map((m) => {
               const isSelected = activeMilestoneYear === m.year;
               return (
                 <button
                   key={m.year}
                   onClick={() => setActiveMilestoneYear(m.year)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-mono font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-mono font-bold whitespace-nowrap transition-colors cursor-pointer ${
                     isSelected
-                      ? "bg-rose-700 text-white shadow-md scale-105 border-2 border-rose-800"
+                      ? "bg-rose-700 text-white shadow-sm border border-rose-800"
                       : "bg-white text-stone-800 hover:bg-rose-100 border border-rose-300"
                   }`}
                 >
@@ -326,56 +308,57 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
             })}
           </div>
 
-          {/* Timeline Vertical Track - (Rule #240) and (Rule #512) removed */}
-          <div className="relative border-l-3 border-rose-400 ml-4 sm:ml-8 md:ml-12 pl-6 sm:pl-10 space-y-10">
+          {/* Timeline Track: Clean responsive margins, zero dot cutoffs */}
+          <div className="relative border-l-2 border-rose-400 ml-3 sm:ml-8 pl-3.5 sm:pl-7 space-y-3 sm:space-y-4">
             {MILESTONES.map((milestone) => {
               const isActive = activeMilestoneYear === milestone.year;
               return (
                 <div
                   key={milestone.year}
                   onClick={() => setActiveMilestoneYear(milestone.year)}
-                  className={`relative p-6 sm:p-8 rounded-3xl transition-all duration-200 cursor-pointer ${
+                  className={`relative p-3 sm:p-5 rounded-xl transition-all duration-150 cursor-pointer ${
                     isActive
-                      ? "bg-white border-3 border-rose-600 shadow-xl ring-2 ring-rose-300"
+                      ? "bg-white border-2 border-rose-600 shadow-sm ring-1 ring-rose-300"
                       : "bg-white/70 border border-rose-200 hover:border-rose-400 hover:bg-white"
                   }`}
                 >
+                  {/* Timeline dot cleanly centered on border-l line */}
                   <div
-                    className={`absolute -left-[32px] sm:-left-[48px] top-8 w-5 h-5 rounded-full border-3 transition-all ${
+                    className={`absolute -left-[21px] sm:-left-[35px] top-4 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 transition-all ${
                       isActive
-                        ? "bg-rose-600 border-white shadow-md scale-125"
+                        ? "bg-rose-600 border-white shadow-sm scale-110"
                         : "bg-rose-300 border-rose-500"
                     }`}
                   />
 
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl sm:text-3xl font-serif font-black text-rose-800">
+                  <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-base sm:text-2xl font-serif font-black text-rose-800">
                         {milestone.year}
                       </span>
-                      <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-rose-100 border border-rose-300 text-rose-900 font-bold">
+                      <span className="text-[9px] sm:text-xs font-mono px-2 py-0.5 rounded-full bg-rose-100 border border-rose-300 text-rose-900 font-bold">
                         {milestone.highlightTag}
                       </span>
                     </div>
-                    <span className="text-xs text-amber-900 font-mono font-bold">
+                    <span className="text-[10px] sm:text-xs text-amber-900 font-mono font-bold">
                       {milestone.emotion}
                     </span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-serif text-[#3b0518] font-bold mb-1">
+                  <h3 className="text-sm sm:text-base font-serif text-[#3b0518] font-bold mb-0.5">
                     {milestone.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-stone-600 italic font-medium mb-3">
+                  <p className="text-[11px] sm:text-xs text-stone-600 italic font-medium mb-1">
                     “{milestone.subtitle}”
                   </p>
 
-                  <p className="text-sm text-stone-800 font-medium leading-relaxed">
+                  <p className="text-xs sm:text-sm text-stone-800 font-medium leading-relaxed">
                     {milestone.description}
                   </p>
 
                   {milestone.archivedRuleRef && (
-                    <div className="mt-4 pt-3 border-t border-rose-100 flex items-center justify-between text-xs text-stone-700 font-semibold">
-                      <span>Associated Archive Code:</span>
+                    <div className="mt-2 pt-1.5 border-t border-rose-100 flex items-center justify-between text-[10px] sm:text-xs text-stone-700 font-semibold">
+                      <span>Associated Code:</span>
                       <span className="font-mono text-emerald-800 font-bold">
                         {milestone.archivedRuleRef === 1
                           ? "Magenta v1"
@@ -394,23 +377,23 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
         </section>
 
         {/* SECTION 5: THE 803 RULES PREVIEW VAULT */}
-        <section className="space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <section className="w-full space-y-3.5 sm:space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
             <div>
-              <span className="text-xs font-mono text-amber-900 uppercase font-bold tracking-wider">
+              <span className="text-[10px] sm:text-xs font-mono text-amber-900 uppercase font-bold tracking-wider">
                 Vault of 803 Rules
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-black text-[#3a0518]">
+              <h2 className="text-lg sm:text-2xl font-serif font-black text-[#3a0518]">
                 Public, Authorised & Private Tenets
               </h2>
             </div>
 
-            <div className="flex items-center gap-2 p-1 bg-white rounded-xl border border-rose-200 text-xs font-bold">
+            <div className="flex items-center gap-1 p-1 bg-white rounded-xl border border-rose-200 text-xs font-bold self-start sm:self-auto">
               {(["all", "public", "authorised", "private"] as const).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedRuleCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg capitalize transition-colors cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg capitalize transition-colors cursor-pointer ${
                     selectedRuleCategory === cat
                       ? "bg-rose-700 text-white shadow-sm"
                       : "text-stone-700 hover:text-stone-900 hover:bg-rose-50"
@@ -422,14 +405,14 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
             {filteredRules.map((rule) => (
               <div
                 key={rule.id}
-                className="p-6 rounded-2xl bg-white border-2 border-rose-200 hover:border-rose-400 shadow-md transition-all flex flex-col justify-between"
+                className="p-3.5 sm:p-5 rounded-xl bg-white border-2 border-rose-200 hover:border-rose-400 shadow-sm transition-colors flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3 text-xs font-mono">
+                  <div className="flex flex-wrap items-center justify-between gap-1 mb-1.5 text-xs font-mono">
                     <span className="text-amber-900 font-bold">
                       {rule.id === 1
                         ? "Magenta v1"
@@ -440,7 +423,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                         : `Rule #${rule.id}`}
                     </span>
                     <span
-                      className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                      className={`px-2 py-0.5 rounded text-[9px] font-bold ${
                         rule.category === "public"
                           ? "bg-emerald-100 text-emerald-900 border border-emerald-300"
                           : rule.category === "authorised"
@@ -451,14 +434,14 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                       {rule.status}
                     </span>
                   </div>
-                  <h4 className="text-base font-serif font-bold text-stone-900 mb-2">
+                  <h4 className="text-sm font-serif font-bold text-stone-900 mb-1">
                     {rule.title}
                   </h4>
-                  <p className="text-xs sm:text-sm text-stone-700 leading-relaxed font-medium">
+                  <p className="text-xs text-stone-700 leading-relaxed font-medium">
                     {rule.text}
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-rose-100 text-[11px] text-stone-500 font-semibold flex justify-between">
+                <div className="mt-2.5 pt-1.5 border-t border-rose-100 text-[10px] text-stone-500 font-semibold flex justify-between">
                   <span>Drafted: {rule.yearAdded}</span>
                   <span>Lime Green 💚</span>
                 </div>
@@ -468,39 +451,39 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
         </section>
 
         {/* SECTION 6: STILL CURRENT OF 18 CHAPTERS */}
-        <section className="space-y-6">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-mono text-blue-900 uppercase font-bold tracking-wider">
+        <section className="w-full space-y-3.5 sm:space-y-5">
+          <div className="text-center max-w-2xl mx-auto space-y-1 px-1">
+            <span className="text-[10px] sm:text-xs font-mono text-blue-900 uppercase font-bold tracking-wider">
               Still Current of 18
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-black text-[#3a0518]">
+            <h2 className="text-lg sm:text-2xl font-serif font-black text-[#3a0518]">
               Chapters (Some Founded & Some Lost :)
             </h2>
-            <p className="text-xs sm:text-sm text-stone-700 font-medium">
+            <p className="text-[11px] sm:text-xs text-stone-700 font-medium">
               The eighteen core chapters of Lime Green. Whether present at the table or wandering in distance, each chapter remains preserved forever.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
             {CHARACTERS_DATA.slice(0, 12).map((chapter) => (
               <div
                 key={chapter.id}
-                className="p-4 rounded-2xl bg-white border-2 border-rose-200 hover:border-blue-400 transition-colors text-center flex flex-col justify-between shadow-sm"
+                className="p-2.5 sm:p-3.5 rounded-xl bg-white border border-rose-200 hover:border-blue-400 transition-colors text-center flex flex-col justify-between shadow-sm min-h-[120px]"
               >
                 <div>
-                  <div className="text-2xl mb-1.5 select-none">{chapter.symbol}</div>
-                  <span className="text-[10px] font-mono text-stone-500 font-bold">{chapter.code}</span>
-                  <h5 className="text-xs font-serif font-bold text-stone-900 mt-1 line-clamp-1">
+                  <div className="text-lg sm:text-xl mb-0.5 select-none">{chapter.symbol}</div>
+                  <span className="text-[9px] font-mono text-stone-500 font-bold block">{chapter.code}</span>
+                  <h5 className="text-[11px] font-serif font-bold text-stone-900 mt-0.5 line-clamp-1">
                     {chapter.name}
                   </h5>
-                  <p className="text-[10px] text-stone-600 line-clamp-1 mt-0.5 font-medium">
+                  <p className="text-[9px] text-stone-600 line-clamp-1 mt-0.5 font-medium">
                     {chapter.nature}
                   </p>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-rose-100">
+                <div className="mt-1.5 pt-1 border-t border-rose-100">
                   <span
-                    className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-mono font-bold ${
+                    className={`inline-block px-1.5 py-0.5 rounded text-[8px] font-mono font-bold ${
                       chapter.status === "Founded"
                         ? "bg-emerald-100 text-emerald-900"
                         : chapter.status === "Active Guardian"
@@ -515,28 +498,28 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
             ))}
           </div>
 
-          <div className="text-center pt-2">
+          <div className="text-center pt-1">
             <button
               onClick={() => handleNavigate("denim", "/denim-blue.html")}
               className="text-xs font-mono font-bold text-blue-900 hover:text-blue-700 underline underline-offset-4 cursor-pointer"
             >
-              Inspect all 18 Chapters & calculate your affinity on the Denim Blue page →
+              Inspect all 18 Chapters & calculate your affinity on Denim Blue →
             </button>
           </div>
         </section>
 
         {/* BOTTOM REDIRECTION CALLOUT */}
-        <section className="pt-6 text-center">
-          <div className="max-w-2xl mx-auto p-8 rounded-3xl bg-white border-2 border-rose-300 shadow-xl space-y-4">
-            <h3 className="text-xl font-serif font-black text-rose-950">
+        <section className="w-full pt-1 text-center">
+          <div className="w-full max-w-2xl mx-auto p-4 sm:p-7 rounded-2xl bg-white border-2 border-rose-300 shadow-sm space-y-2.5">
+            <h3 className="text-base sm:text-lg font-serif font-black text-rose-950">
               Ready to delve into your Denim Blue Profile?
             </h3>
-            <p className="text-xs sm:text-sm text-stone-700 font-medium">
+            <p className="text-[11px] sm:text-xs text-stone-700 font-medium">
               Discover your Status, Nature, and test if your resonance crosses the 62% benchmark of Lime Green 💚.
             </p>
             <button
               onClick={() => handleNavigate("denim", "/denim-blue.html")}
-              className="px-6 py-2.5 rounded-full bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg cursor-pointer transition-transform hover:scale-105"
+              className="w-full sm:w-auto px-6 py-2 rounded-full bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs sm:text-sm tracking-wide shadow cursor-pointer transition-transform active:scale-95"
             >
               Continue to Denim Blue 👖
             </button>

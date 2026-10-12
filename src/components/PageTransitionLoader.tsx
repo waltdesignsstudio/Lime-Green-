@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LEAF_IMAGE_PATH, LOADING_TEXT } from "../constants/assets";
+import { LOGO_IMAGE_URL, LOADING_TEXT } from "../constants/assets";
 import { motion, AnimatePresence } from "motion/react";
 
 interface PageTransitionLoaderProps {
@@ -40,14 +40,14 @@ export const PageTransitionLoader: React.FC<PageTransitionLoaderProps> = ({
         <div className="absolute w-72 h-72 rounded-full bg-amber-500/10 blur-3xl pointer-events-none animate-pulse" />
         <div className="absolute w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none -bottom-10" />
 
-        {/* Fixed Stationary Yellow Leaf (Does NOT move) */}
+        {/* Fixed Stationary New Logo (Does NOT move) */}
         <div className="relative mb-6">
           <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden p-1.5 bg-gradient-to-tr from-amber-500/40 via-yellow-400/30 to-emerald-400/30 shadow-[0_0_40px_rgba(245,158,11,0.35)] border border-amber-400/40">
             <img
-              src={LEAF_IMAGE_PATH}
-              alt="Yellow Autumn Dry single Leaf"
+              src={LOGO_IMAGE_URL}
+              alt="Lime Green Official Emblem"
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover rounded-xl filter contrast-110 brightness-105"
+              className="w-full h-full object-cover rounded-xl filter contrast-105"
             />
           </div>
         </div>

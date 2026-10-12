@@ -19,8 +19,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   };
 
   return (
-    <footer className="relative z-40 bg-orange-500 text-white py-12 px-4 sm:px-8 mt-24 shadow-2xl border-t-4 border-orange-600">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="relative z-40 bg-orange-500 text-white py-6 sm:py-12 px-4 sm:px-8 mt-8 sm:mt-24 shadow-2xl border-t-4 border-orange-600">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
         
         {/* Left: Brand Identity & Subtitle */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-1.5">
