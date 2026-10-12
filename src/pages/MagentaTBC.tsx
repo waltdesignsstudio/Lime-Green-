@@ -4,8 +4,8 @@ import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
 import { AutumnLeavesFrame } from "../components/AutumnLeavesFrame";
 import { PageTransitionLoader } from "../components/PageTransitionLoader";
+import { FixedMusicControl } from "../components/FixedMusicControl";
 import { LEAF_IMAGE_PATH, SITE_SUBTITLE, SITE_TITLE } from "../constants/assets";
-import { musicEngine } from "../utils/musicPlayer";
 
 interface MagentaTBCProps {
   onNavigatePage?: (pageId: string, href: string) => void;
@@ -65,6 +65,9 @@ export const MagentaTBC: React.FC<MagentaTBCProps> = ({ onNavigatePage }) => {
       {/* Page Transition overlay */}
       <PageTransitionLoader isLoading={loadingTransition} />
 
+      {/* Single Fixed Play/Pause music button */}
+      <FixedMusicControl />
+
       {/* Detailed realistic drifting leaves */}
       <AutumnLeavesFrame fillSides={false} intensity="normal" />
 
@@ -90,7 +93,7 @@ export const MagentaTBC: React.FC<MagentaTBCProps> = ({ onNavigatePage }) => {
 
           {/* Central Dry Leaf Showcase */}
           <div className="flex justify-center my-2">
-            <div className="relative group cursor-pointer" onClick={() => musicEngine.toggle()}>
+            <div className="relative group">
               <div className="w-26 h-26 sm:w-34 sm:h-34 rounded-2xl overflow-hidden p-1.5 bg-gradient-to-br from-amber-400 via-fuchsia-300 to-amber-500 border-2 border-fuchsia-400 shadow-xl group-hover:scale-105 transition-all duration-300">
                 <img
                   src={LEAF_IMAGE_PATH}

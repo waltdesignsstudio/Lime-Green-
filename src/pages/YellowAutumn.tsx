@@ -4,9 +4,9 @@ import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
 import { AutumnLeavesFrame } from "../components/AutumnLeavesFrame";
 import { PageTransitionLoader } from "../components/PageTransitionLoader";
+import { FixedMusicControl } from "../components/FixedMusicControl";
 import { LEAF_IMAGE_PATH, SITE_SUBTITLE, SITE_TITLE } from "../constants/assets";
 import { RULES_DATA } from "../data/mockData";
-import { musicEngine } from "../utils/musicPlayer";
 
 interface YellowAutumnProps {
   onNavigatePage?: (pageId: string, href: string) => void;
@@ -85,6 +85,9 @@ export const YellowAutumn: React.FC<YellowAutumnProps> = ({ onNavigatePage }) =>
     <div className="relative min-h-screen bg-[#fef9c3] text-[#451a03] overflow-x-hidden selection:bg-amber-600 selection:text-white">
       {/* Page Transition overlay */}
       <PageTransitionLoader isLoading={loadingTransition} />
+
+      {/* Single Fixed Play/Pause music button */}
+      <FixedMusicControl />
 
       {/* Detailed realistic drifting leaves */}
       <AutumnLeavesFrame fillSides={false} intensity="dense" />

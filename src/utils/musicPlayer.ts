@@ -71,22 +71,8 @@ class MohabbateinMusicEngine {
   private masterGain: GainNode | null = null;
 
   constructor() {
-    if (typeof window !== "undefined") {
-      // Check if user had it playing previously
-      const saved = localStorage.getItem("lime_green_music_playing");
-      if (saved === "true") {
-        // Will start on first user interaction
-        const startOnFirstGesture = () => {
-          this.play();
-          window.removeEventListener("click", startOnFirstGesture);
-          window.removeEventListener("keydown", startOnFirstGesture);
-          window.removeEventListener("touchstart", startOnFirstGesture);
-        };
-        window.addEventListener("click", startOnFirstGesture, { once: true });
-        window.addEventListener("keydown", startOnFirstGesture, { once: true });
-        window.addEventListener("touchstart", startOnFirstGesture, { once: true });
-      }
-    }
+    // Music does NOT autoplay on touching or clicking the page.
+    // It is strictly controlled via the dedicated Play/Pause button.
   }
 
   private initContext() {

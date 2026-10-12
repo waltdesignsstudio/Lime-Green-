@@ -1,21 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { SITE_SUBTITLE, SITE_TITLE, MUSIC_TITLE } from "../constants/assets";
-import { musicEngine } from "../utils/musicPlayer";
 
 interface FooterProps {
   onNavigate?: (pageId: string, href: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-
-  useEffect(() => {
-    const unsub = musicEngine.subscribe((playing) => {
-      setIsMusicPlaying(playing);
-    });
-    return unsub;
-  }, []);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -81,17 +71,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        {/* Right: Music Status, Chapters counter, Back to top */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 text-xs">
-          
-          {/* Music Button */}
-          <button
-            onClick={() => musicEngine.toggle()}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-700 hover:bg-orange-800 text-white border border-orange-400 font-mono text-[11px] cursor-pointer transition-colors"
-          >
-            <span>{isMusicPlaying ? "🎻 Music ON" : "🔇 Music OFF"}</span>
-          </button>
-
+        {/* Right: Chapters counter & Back to top (play button removed from here) */}
+        <div className="flex items-center gap-3 text-xs">
           {/* Chapters Counter */}
           <div className="flex items-center gap-2 font-mono text-[11px] px-3 py-1.5 rounded-full bg-orange-700/90 border border-orange-400 text-white shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-300 animate-ping" />
@@ -112,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       </div>
 
       <div className="max-w-6xl mx-auto mt-6 pt-4 border-t border-orange-400/60 text-center text-xs text-orange-200">
-        Continuous Instrumental: {MUSIC_TITLE} • © 2015–{new Date().getFullYear()} Lime Green💚🙃. All unforgotten memories and dry leaves preserved.
+        Theme: {MUSIC_TITLE} • © 2015–{new Date().getFullYear()} Lime Green💚🙃. All unforgotten memories and dry leaves preserved.
       </div>
     </footer>
   );

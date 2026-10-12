@@ -116,7 +116,7 @@ export const RULES_DATA: RuleItem[] = [
     id: 1,
     category: "public",
     title: "Magenta v1",
-    text: "Never force an explanation from someone who has run out of words. Silence is an answer, but silence is also shelter. [Formerly Rule #1]",
+    text: "Never force an explanation from someone who has run out of words. Silence is an answer, but silence is also shelter.",
     yearAdded: 2015,
     status: "Active Public"
   },
@@ -148,7 +148,7 @@ export const RULES_DATA: RuleItem[] = [
     id: 240,
     category: "authorised",
     title: "Magenta V2",
-    text: "If a call arrives between 02:00 and 04:00 AM, pick up without inquiring 'why'. Some burdens cannot withstand waiting for sunrise. [Formerly Rule #240]",
+    text: "If a call arrives between 02:00 and 04:00 AM, pick up without inquiring 'why'. Some burdens cannot withstand waiting for sunrise.",
     yearAdded: 2020,
     status: "Authorised Only"
   },
@@ -164,7 +164,7 @@ export const RULES_DATA: RuleItem[] = [
     id: 512,
     category: "authorised",
     title: "Magenta v3",
-    text: "The sacred bond of the 18 Chapters. Even if the book closes, the ink remains alive in the memories of those who lived it. [Rule #512]",
+    text: "The sacred bond of the 18 Chapters. Even if the book closes, the ink remains alive in the memories of those who lived it.",
     yearAdded: 2022,
     status: "Authorised Only"
   },

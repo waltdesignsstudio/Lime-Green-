@@ -4,9 +4,14 @@ import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
 import { AutumnLeavesFrame } from "../components/AutumnLeavesFrame";
 import { PageTransitionLoader } from "../components/PageTransitionLoader";
+import { FixedMusicControl } from "../components/FixedMusicControl";
 import { MILESTONES, RULES_DATA, CHARACTERS_DATA } from "../data/mockData";
-import { LEAF_IMAGE_PATH, AUTUMN_TREES_BG, SITE_SUBTITLE } from "../constants/assets";
-import { musicEngine } from "../utils/musicPlayer";
+import {
+  LOGO_IMAGE_URL,
+  LOGO_HREF,
+  AUTUMN_TREES_BG,
+  SITE_SUBTITLE,
+} from "../constants/assets";
 
 interface RedHomeProps {
   onNavigatePage?: (pageId: string, href: string) => void;
@@ -17,9 +22,8 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
   const [selectedRuleCategory, setSelectedRuleCategory] = useState<"all" | "public" | "authorised" | "private">("all");
   const [activeMilestoneYear, setActiveMilestoneYear] = useState<number | null>(2015);
 
-  // Parallax scroll - gentle position shift without losing ANY brightness or visibility!
   const { scrollY } = useScroll();
-  const heroParallaxY = useTransform(scrollY, [0, 600], [0, 40]);
+  const heroParallaxY = useTransform(scrollY, [0, 600], [0, 35]);
 
   const handleNavigate = (pageId: string, href: string) => {
     setLoadingTransition(true);
@@ -37,27 +41,31 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
     : RULES_DATA.filter((r) => r.category === selectedRuleCategory);
 
   return (
-    // Red whole page bg: Baby Pink with high-contrast text and crisp elements
+    // Red whole page bg: Baby Pink
     <div className="relative min-h-screen bg-[#ffe4e6] text-[#2d0a15] overflow-x-hidden selection:bg-rose-500 selection:text-white">
-      {/* Page Transition overlay */}
+      {/* Page Transition overlay (keeps original stationary yellow leaf logo) */}
       <PageTransitionLoader isLoading={loadingTransition} />
+
+      {/* Single Fixed Play/Pause music button */}
+      <FixedMusicControl />
 
       {/* Detailed realistic yellow drifting leaves and continuous side leaf borders with NO gaps */}
       <AutumnLeavesFrame fillSides={true} intensity="normal" />
 
-      {/* Global Navigation Header with new logo and music on/off */}
+      {/* Global Navigation Header with Silver Shiny Creamy Dark BG & Marquee */}
       <Navigation
         currentPage="red"
         onNavigate={(pageId, href) => handleNavigate(pageId, href)}
+        showMarquee={true}
       />
 
       {/* MAIN CONTENT CONTAINER */}
       <main className="relative z-20 px-6 sm:px-12 md:px-20 lg:px-28 max-w-7xl mx-auto space-y-24 pt-6">
 
         {/* HERO SECTION: Baby Pink base + Transparent Autumn Trees Background */}
-        <section className="relative min-h-[85vh] flex flex-col justify-center items-center text-center pt-6 pb-14 rounded-3xl overflow-hidden shadow-sm border border-rose-200 bg-white/40 backdrop-blur-sm">
+        <section className="relative min-h-[85vh] flex flex-col justify-center items-center text-center pt-8 pb-14 rounded-3xl overflow-hidden shadow-sm border border-rose-200 bg-white/40 backdrop-blur-sm">
           
-          {/* Transparent Autumn Trees Background as requested */}
+          {/* Transparent Autumn Trees Background */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
             <img
               src={AUTUMN_TREES_BG}
@@ -65,49 +73,46 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover object-center opacity-35 mix-blend-multiply filter contrast-120 saturate-110"
             />
-            {/* Soft pink gradient blend over autumn trees */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#ffe4e6]/30 via-transparent to-[#ffe4e6]/80" />
           </div>
 
-          {/* Central Hero Content - Stays 100% Bright and Visible upon scroll */}
+          {/* Central Hero Content */}
           <motion.div
             style={{ y: heroParallaxY }}
             className="relative z-10 max-w-4xl mx-auto space-y-6 px-4"
           >
             {/* Since 2015 Badge */}
-            <motion.div
-              initial={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-rose-900 text-rose-50 text-xs sm:text-sm font-mono shadow-md border border-rose-700"
-            >
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-rose-900 text-rose-50 text-xs sm:text-sm font-mono shadow-md border border-rose-700">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
               <span className="font-bold">Since : 2015</span>
               <span className="text-rose-300">•</span>
               <span className="text-amber-300 font-sans font-semibold">11+ Years of Preserved Moments</span>
-            </motion.div>
+            </div>
 
-            {/* Central Realistic Dry Yellow Leaf Showcase */}
-            <motion.div
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="flex justify-center my-2"
-            >
-              <div className="relative group cursor-pointer" onClick={() => musicEngine.toggle()}>
-                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden p-1.5 bg-gradient-to-br from-amber-400 via-rose-300 to-amber-500 border-2 border-amber-500 shadow-xl group-hover:scale-105 transition-all duration-300">
+            {/* Central Hero Logo: Replaced with New Logo as requested */}
+            <div className="flex justify-center my-3">
+              <a
+                href={LOGO_HREF}
+                target="_blank"
+                rel="noreferrer"
+                className="relative group cursor-pointer block"
+                title="Lime Green Official Emblem"
+              >
+                <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl overflow-hidden p-1.5 bg-gradient-to-br from-[#d1d5db] via-rose-200 to-amber-300 border-3 border-[#9ca3af] shadow-2xl group-hover:scale-105 transition-all duration-300">
                   <img
-                    src={LEAF_IMAGE_PATH}
-                    alt="Yellow autumn Dry single Leaf"
+                    src={LOGO_IMAGE_URL}
+                    alt="Whats-App-Image-2026-10-12-at-11-58-31"
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover rounded-xl filter contrast-110"
+                    className="w-full h-full object-cover rounded-2xl filter contrast-105"
                   />
                 </div>
-                <span className="absolute -bottom-2.5 -right-2 px-2.5 py-0.5 rounded-full bg-stone-900 border border-amber-400 text-[10px] text-amber-300 font-mono shadow">
-                  Yellow autumn Dry Leaf 🍂
+                <span className="absolute -bottom-3 -right-2 px-3 py-0.5 rounded-full bg-stone-900 border border-emerald-400 text-[10px] text-emerald-300 font-mono shadow font-bold">
+                  Official Emblem 💚
                 </span>
-              </div>
-            </motion.div>
+              </a>
+            </div>
 
-            {/* Animated Hero Text: "Some stories stay incomplete 🙃 ~" with full brightness */}
+            {/* Animated Hero Text: "Some stories stay incomplete 🙃 ~" */}
             <div className="overflow-hidden py-1">
               <motion.h1
                 initial={{ y: 35, opacity: 0 }}
@@ -124,6 +129,24 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
               {SITE_SUBTITLE}
             </p>
 
+            {/* UPCOMING INCIDENT : The Left & the Indus as requested */}
+            <div className="max-w-xl mx-auto p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-stone-900 via-[#1e2430] to-stone-900 border-2 border-amber-400/80 text-white shadow-xl space-y-1.5 text-center">
+              <div className="flex items-center justify-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
+                <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-300">
+                  Upcoming Incident
+                </span>
+                <span className="text-stone-400">•</span>
+                <span className="text-xs font-mono text-emerald-300">Classified Event</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-200 to-sky-200">
+                The Left & the Indus
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-300 font-light italic max-w-md mx-auto">
+                “Where the left fork departs into silence and the ancient waters of the Indus carry away what could never be spoken.”
+              </p>
+            </div>
+
             {/* CTA Button: 'discover my past' -> Redirects to Denim Blue */}
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
@@ -138,13 +161,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                   Denim Blue
                 </span>
               </button>
-
-              <button
-                onClick={() => musicEngine.toggle()}
-                className="px-4 py-2.5 rounded-full bg-white hover:bg-stone-50 border-2 border-rose-300 text-xs font-bold text-rose-900 flex items-center gap-2 cursor-pointer shadow-md transition-colors"
-              >
-                <span>🎻 Mohabbatein Music Theme</span>
-              </button>
             </div>
 
             {/* Scroll Indicator */}
@@ -156,7 +172,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
           </motion.div>
         </section>
 
-        {/* SECTION 1: EMOTIVE QUOTE CARD (Rose & Emotionless Emojis) */}
+        {/* SECTION 1: EMOTIVE QUOTE CARD */}
         <section className="relative">
           <div className="p-8 sm:p-12 rounded-3xl bg-white/85 border-2 border-rose-300 shadow-xl relative overflow-hidden text-center max-w-4xl mx-auto backdrop-blur-md">
             <div className="absolute top-4 right-6 text-3xl opacity-30 select-none">🌹😐</div>
@@ -188,7 +204,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
         {/* SECTION 2: LORE & ESSENCE OF LIME GREEN */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           
-          {/* Card 1: Not a single person, but cherished moments */}
           <div className="p-8 rounded-3xl bg-white/90 border-2 border-emerald-400 shadow-lg flex flex-col justify-between relative group hover:shadow-xl transition-all">
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -211,7 +226,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
             </div>
           </div>
 
-          {/* Card 2: 803 Rules & 18 Chapters */}
           <div className="p-8 rounded-3xl bg-white/90 border-2 border-amber-400 shadow-lg flex flex-col justify-between relative group hover:shadow-xl transition-all">
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -241,7 +255,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
           <div className="p-6 sm:p-8 rounded-3xl bg-white/90 border-2 border-rose-300 shadow-xl">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               
-              {/* Stat 1: Live Status */}
               <div className="p-5 rounded-2xl bg-rose-50 border-2 border-rose-200 flex flex-col items-center justify-center">
                 <span className="text-xs uppercase font-mono tracking-widest text-rose-800 font-bold flex items-center gap-2 mb-1">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
@@ -253,7 +266,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                 <span className="text-xs text-stone-600 font-medium mt-1">Real-time Memory Stream</span>
               </div>
 
-              {/* Stat 2: Rules: 803 */}
               <div className="p-5 rounded-2xl bg-amber-50 border-2 border-amber-200 flex flex-col items-center justify-center">
                 <span className="text-xs uppercase font-mono tracking-widest text-amber-900 font-bold mb-1">
                   Total Tenets
@@ -264,7 +276,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                 <span className="text-xs text-stone-600 font-medium mt-1">Public, Authorised & Private</span>
               </div>
 
-              {/* Stat 3: Chapters: 18 */}
               <div className="p-5 rounded-2xl bg-blue-50 border-2 border-blue-200 flex flex-col items-center justify-center">
                 <span className="text-xs uppercase font-mono tracking-widest text-blue-900 font-bold mb-1">
                   Living Roster
@@ -315,7 +326,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
             })}
           </div>
 
-          {/* Timeline Vertical Track */}
+          {/* Timeline Vertical Track - (Rule #240) and (Rule #512) removed */}
           <div className="relative border-l-3 border-rose-400 ml-4 sm:ml-8 md:ml-12 pl-6 sm:pl-10 space-y-10">
             {MILESTONES.map((milestone) => {
               const isActive = activeMilestoneYear === milestone.year;
@@ -329,7 +340,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                       : "bg-white/70 border border-rose-200 hover:border-rose-400 hover:bg-white"
                   }`}
                 >
-                  {/* Timeline Node Point */}
                   <div
                     className={`absolute -left-[32px] sm:-left-[48px] top-8 w-5 h-5 rounded-full border-3 transition-all ${
                       isActive
@@ -368,11 +378,11 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                       <span>Associated Archive Code:</span>
                       <span className="font-mono text-emerald-800 font-bold">
                         {milestone.archivedRuleRef === 1
-                          ? "Magenta v1 (Rule #1)"
+                          ? "Magenta v1"
                           : milestone.archivedRuleRef === 240
-                          ? "Magenta V2 (Rule #240)"
+                          ? "Magenta V2"
                           : milestone.archivedRuleRef === 512
-                          ? "Magenta v3 (Rule #512)"
+                          ? "Magenta v3"
                           : `Rule #${milestone.archivedRuleRef}`}
                       </span>
                     </div>
@@ -383,7 +393,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
           </div>
         </section>
 
-        {/* SECTION 5: THE 803 RULES PREVIEW VAULT (Renamed Rule #1 to Magenta v1, #240 to Magenta V2, #512 to Magenta v3) */}
+        {/* SECTION 5: THE 803 RULES PREVIEW VAULT */}
         <section className="space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
@@ -395,7 +405,6 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
               </h2>
             </div>
 
-            {/* Category Filter Tabs */}
             <div className="flex items-center gap-2 p-1 bg-white rounded-xl border border-rose-200 text-xs font-bold">
               {(["all", "public", "authorised", "private"] as const).map((cat) => (
                 <button
@@ -458,7 +467,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
           </div>
         </section>
 
-        {/* SECTION 6: STILL CURRENT OF 18 CHAPTERS (Renamed from Characters to Chapters) */}
+        {/* SECTION 6: STILL CURRENT OF 18 CHAPTERS */}
         <section className="space-y-6">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-mono text-blue-900 uppercase font-bold tracking-wider">

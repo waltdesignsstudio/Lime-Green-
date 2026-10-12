@@ -40,20 +40,8 @@ export const PageTransitionLoader: React.FC<PageTransitionLoaderProps> = ({
         <div className="absolute w-72 h-72 rounded-full bg-amber-500/10 blur-3xl pointer-events-none animate-pulse" />
         <div className="absolute w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none -bottom-10" />
 
-        {/* Animated Yellow Leaf */}
-        <motion.div
-          animate={{
-            rotate: [0, 8, -6, 4, 0],
-            y: [0, -12, 0],
-            scale: [1, 1.05, 1],
-          }}
-          transition={{
-            duration: 3.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="relative mb-6"
-        >
+        {/* Fixed Stationary Yellow Leaf (Does NOT move) */}
+        <div className="relative mb-6">
           <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden p-1.5 bg-gradient-to-tr from-amber-500/40 via-yellow-400/30 to-emerald-400/30 shadow-[0_0_40px_rgba(245,158,11,0.35)] border border-amber-400/40">
             <img
               src={LEAF_IMAGE_PATH}
@@ -62,24 +50,7 @@ export const PageTransitionLoader: React.FC<PageTransitionLoaderProps> = ({
               className="w-full h-full object-cover rounded-xl filter contrast-110 brightness-105"
             />
           </div>
-
-          {/* Drifting golden leaf spark effect */}
-          <motion.div
-            animate={{
-              y: [20, -30],
-              opacity: [0, 0.8, 0],
-              x: [-15, 15],
-            }}
-            transition={{
-              duration: 2.2,
-              repeat: Infinity,
-              ease: "easeOut",
-            }}
-            className="absolute -top-3 -right-2 text-amber-300 text-lg pointer-events-none"
-          >
-            🍂
-          </motion.div>
-        </motion.div>
+        </div>
 
         {/* Loading text exactly as requested */}
         <motion.div

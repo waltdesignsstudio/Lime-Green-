@@ -7,7 +7,8 @@ export const LOGO_HREF = "https://ibb.co/MDzfF05s";
 export const SITE_TITLE = "Lime Green💚🙃";
 export const SITE_SUBTITLE = "Lime Green ....to be continued 🔏🧿🤌🏻🫠🫶🏻.";
 export const LOADING_TEXT = "Lime Green💚🙃...to be continued 🔏🧿🤌🏻🫠🫶🏻.";
-export const MUSIC_TITLE = "Mohabbatein Love Theme Instrumental";
+export const MUSIC_TITLE = "A Deep Fall near Indus";
+export const MARQUEE_TEXT = '"Welcome to Lime Green 💚" Some stories stay incomplete...';
 
 export const NAV_LINKS = [
   { id: "red", label: "Red (Home)", href: "/index.html", color: "from-rose-600 to-red-800" },

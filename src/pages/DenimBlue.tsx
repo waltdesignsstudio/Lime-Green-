@@ -4,6 +4,7 @@ import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
 import { AutumnLeavesFrame } from "../components/AutumnLeavesFrame";
 import { PageTransitionLoader } from "../components/PageTransitionLoader";
+import { FixedMusicControl } from "../components/FixedMusicControl";
 import { CHARACTERS_DATA, LANGUAGES_OF_LIME_GREEN } from "../data/mockData";
 import { LEAF_IMAGE_PATH, SITE_SUBTITLE } from "../constants/assets";
 
@@ -49,6 +50,9 @@ export const DenimBlue: React.FC<DenimBlueProps> = ({ onNavigatePage }) => {
     <div className="relative min-h-screen bg-[#cffafe] text-[#0f2942] overflow-x-hidden selection:bg-blue-600 selection:text-white">
       {/* Page Transition overlay */}
       <PageTransitionLoader isLoading={loadingTransition} />
+
+      {/* Single Fixed Play/Pause music button */}
+      <FixedMusicControl />
 
       {/* Detailed realistic drifting leaves and side borders with NO gaps */}
       <AutumnLeavesFrame fillSides={true} intensity="normal" />
