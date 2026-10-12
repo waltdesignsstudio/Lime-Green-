@@ -5,7 +5,7 @@ import { AutumnLeavesFrame } from "../components/AutumnLeavesFrame";
 import { PageTransitionLoader } from "../components/PageTransitionLoader";
 import { FixedMusicControl } from "../components/FixedMusicControl";
 import { CHARACTERS_DATA, LANGUAGES_OF_LIME_GREEN } from "../data/mockData";
-import { LEAF_IMAGE_PATH, SITE_SUBTITLE } from "../constants/assets";
+import { LOGO_IMAGE_URL, LOGO_HREF, SITE_SUBTITLE } from "../constants/assets";
 
 interface DenimBlueProps {
   onNavigatePage?: (pageId: string, href: string) => void;
@@ -73,6 +73,29 @@ export const DenimBlue: React.FC<DenimBlueProps> = ({ onNavigatePage }) => {
             <span>Denim Blue Domain</span>
             <span className="text-blue-300">•</span>
             <span className="text-emerald-300">Truth & Resonance</span>
+          </div>
+
+          {/* Central Logo Emblem Showcase */}
+          <div className="flex justify-center my-1.5 sm:my-3">
+            <a
+              href={LOGO_HREF}
+              target="_blank"
+              rel="noreferrer"
+              className="relative group cursor-pointer block"
+              title="Lime Green Official Emblem"
+            >
+              <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl sm:rounded-3xl overflow-hidden p-1 bg-gradient-to-br from-[#d1d5db] via-blue-200 to-amber-300 border-2 sm:border-3 border-blue-400 shadow-lg group-hover:scale-105 transition-transform duration-200">
+                <img
+                  src={LOGO_IMAGE_URL}
+                  alt="Lime Green Emblem"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover rounded-xl sm:rounded-2xl"
+                />
+              </div>
+              <span className="absolute -bottom-2 -right-1 px-2 py-0.5 rounded-full bg-stone-900 border border-emerald-400 text-[9px] sm:text-[10px] text-emerald-300 font-mono shadow font-bold">
+                Emblem
+              </span>
+            </a>
           </div>
 
           <h1 className="text-xl sm:text-4xl md:text-5xl font-serif font-black text-[#0c2e4e] drop-shadow-sm break-words px-1">
@@ -238,10 +261,10 @@ export const DenimBlue: React.FC<DenimBlueProps> = ({ onNavigatePage }) => {
                 {/* Header */}
                 <div className="flex items-center justify-between pb-3 border-b border-blue-200">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl overflow-hidden border-2 border-amber-500 shadow-sm bg-amber-50 shrink-0">
+                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl overflow-hidden border-2 border-emerald-500 shadow-sm bg-stone-900 shrink-0">
                       <img
-                        src={LEAF_IMAGE_PATH}
-                        alt="Dry Leaf"
+                        src={LOGO_IMAGE_URL}
+                        alt="Lime Green Emblem"
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover"
                       />

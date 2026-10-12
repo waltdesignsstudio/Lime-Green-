@@ -4,7 +4,7 @@ import { Footer } from "../components/Footer";
 import { AutumnLeavesFrame } from "../components/AutumnLeavesFrame";
 import { PageTransitionLoader } from "../components/PageTransitionLoader";
 import { FixedMusicControl } from "../components/FixedMusicControl";
-import { LEAF_IMAGE_PATH, SITE_SUBTITLE, SITE_TITLE } from "../constants/assets";
+import { LOGO_IMAGE_URL, LOGO_HREF, SITE_SUBTITLE, SITE_TITLE } from "../constants/assets";
 
 interface MagentaTBCProps {
   onNavigatePage?: (pageId: string, href: string) => void;
@@ -93,21 +93,27 @@ export const MagentaTBC: React.FC<MagentaTBCProps> = ({ onNavigatePage }) => {
             <span className="text-emerald-300">Confidential Codex</span>
           </div>
 
-          {/* Central Dry Leaf Showcase */}
+          {/* Central Logo Emblem Showcase */}
           <div className="flex justify-center my-1.5 sm:my-3">
-            <div className="relative group">
-              <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl overflow-hidden p-1 bg-gradient-to-br from-amber-400 via-fuchsia-300 to-amber-500 border-2 border-fuchsia-400 shadow-lg group-hover:scale-105 transition-transform duration-200">
+            <a
+              href={LOGO_HREF}
+              target="_blank"
+              rel="noreferrer"
+              className="relative group cursor-pointer block"
+              title="Lime Green Official Emblem"
+            >
+              <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl sm:rounded-3xl overflow-hidden p-1 bg-gradient-to-br from-[#d1d5db] via-rose-200 to-amber-300 border-2 sm:border-3 border-[#9ca3af] shadow-lg group-hover:scale-105 transition-transform duration-200">
                 <img
-                  src={LEAF_IMAGE_PATH}
-                  alt="Yellow autumn Dry single Leaf"
+                  src={LOGO_IMAGE_URL}
+                  alt="Lime Green Emblem"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover rounded-xl"
+                  className="w-full h-full object-cover rounded-xl sm:rounded-2xl"
                 />
               </div>
-              <span className="absolute -bottom-2 -right-1 px-2 py-0.5 rounded-full bg-stone-900 border border-fuchsia-400 text-[9px] text-fuchsia-200 font-mono shadow font-bold">
-                Detailed Leaf 🍂
+              <span className="absolute -bottom-2 -right-1 px-2 py-0.5 rounded-full bg-stone-900 border border-emerald-400 text-[9px] sm:text-[10px] text-emerald-300 font-mono shadow font-bold">
+                Emblem
               </span>
-            </div>
+            </a>
           </div>
 
           {/* EXACT TITLE REQUESTED: Right now Not Released :) */}

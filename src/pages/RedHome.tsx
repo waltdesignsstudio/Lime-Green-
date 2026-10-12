@@ -102,7 +102,7 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
                   />
                 </div>
                 <span className="absolute -bottom-2 -right-1 px-2 py-0.5 rounded-full bg-stone-900 border border-emerald-400 text-[9px] sm:text-[10px] text-emerald-300 font-mono shadow font-bold">
-                  Emblem 💚
+                  Emblem
                 </span>
               </a>
             </div>
