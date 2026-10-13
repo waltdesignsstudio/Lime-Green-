@@ -1,4 +1,5 @@
 import React from "react";
+import { Instagram, ExternalLink } from "lucide-react";
 import { SITE_SUBTITLE, SITE_TITLE, MUSIC_TITLE } from "../constants/assets";
 
 interface FooterProps {
@@ -71,7 +72,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        {/* Right: Chapters counter & Back to top (play button removed from here) */}
+        {/* Right: Chapters counter & Back to top */}
         <div className="flex items-center gap-3 text-xs">
           {/* Chapters Counter */}
           <div className="flex items-center gap-2 font-mono text-[11px] px-3 py-1.5 rounded-full bg-orange-700/90 border border-orange-400 text-white shadow-sm">
@@ -92,7 +93,40 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
       </div>
 
-      <div className="max-w-6xl mx-auto mt-6 pt-4 border-t border-orange-400/60 text-center text-xs text-orange-200">
+      {/* Follow ID & Learn More Section */}
+      <div className="max-w-2xl mx-auto mt-6 pt-5 pb-3 border-t border-orange-400/60 text-center space-y-2">
+        <p className="text-sm sm:text-base font-serif font-bold text-white drop-shadow">
+          If you want to know more about Lime Green 💚 so,
+        </p>
+        <p className="text-xs sm:text-sm text-orange-100 font-medium">
+          Follow this ID &amp; So on :) to be Continued
+        </p>
+        <div className="pt-1">
+          <a
+            href="https://instagram.com/_limegreen_13?exln=MWFhbHJjamo1MXJ4ZA%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-pink-600 via-rose-600 to-amber-500 hover:from-pink-500 hover:to-amber-400 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all transform hover:scale-105 active:scale-95 border border-white/30"
+          >
+            <Instagram className="w-4 h-4" />
+            <span>Click Here (Instagram) : @_limegreen_13</span>
+            <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+          </a>
+        </div>
+        <p className="text-[11px] text-orange-200 font-mono break-all px-2">
+          Click Here (Instagram) :{" "}
+          <a
+            href="https://instagram.com/_limegreen_13?exln=MWFhbHJjamo1MXJ4ZA%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-white"
+          >
+            https://instagram.com/_limegreen_13?exln=MWFhbHJjamo1MXJ4ZA%3D%3D
+          </a>
+        </p>
+      </div>
+
+      <div className="max-w-6xl mx-auto mt-4 pt-3 border-t border-orange-400/40 text-center text-[11px] sm:text-xs text-orange-200">
         Theme: {MUSIC_TITLE} • © 2015–{new Date().getFullYear()} Lime Green💚🙃. All unforgotten memories and dry leaves preserved.
       </div>
     </footer>
