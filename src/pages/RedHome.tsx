@@ -112,6 +112,13 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
               “Some stories stay incomplete 🙃 ~”
             </h1>
 
+            {/* Requested Hero Title */}
+            <div className="w-full max-w-3xl mx-auto p-3 sm:p-4.5 rounded-xl sm:rounded-2xl bg-white/95 border-2 border-emerald-500/90 shadow-md">
+              <h2 className="text-xs sm:text-base md:text-lg font-serif font-black text-[#4a041f] leading-relaxed tracking-wide">
+                Lime Green 💚 is Group of Several Memories and Emotional Attachment & promises between its characters (18) which are done earlier & So on :) To be Continued :)
+              </h2>
+            </div>
+
             {/* Subtitle */}
             <p className="text-xs sm:text-base md:text-lg text-[#6b1430] max-w-2xl mx-auto font-medium leading-relaxed tracking-wide px-1 break-words">
               {SITE_SUBTITLE}
@@ -174,16 +181,16 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
           </div>
         </section>
 
-        {/* SECTION 1: EMOTIVE QUOTE CARD */}
+        {/* SECTION 1: EMOTIVE QUOTE CARD (Card 1: Dark Magenta Background with White Text) */}
         <section className="w-full">
-          <div className="w-full p-3.5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/90 border-2 border-rose-300 shadow-sm text-center max-w-4xl mx-auto space-y-2.5 sm:space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-rose-100 border border-rose-400 text-rose-900 text-[10px] sm:text-xs font-mono font-bold">
+          <div className="w-full p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#4a041f] border-2 border-rose-400/60 shadow-xl text-center max-w-4xl mx-auto space-y-2.5 sm:space-y-4 text-white">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 border border-white/40 text-white text-[10px] sm:text-xs font-mono font-bold shadow-sm">
               <span>The Attachment Paradox</span>
               <span>•</span>
               <span>Loyalty Query</span>
             </div>
 
-            <blockquote className="text-sm sm:text-xl md:text-2xl font-serif text-[#4a041f] font-bold leading-relaxed italic break-words px-1">
+            <blockquote className="text-sm sm:text-xl md:text-2xl font-serif text-white font-bold leading-relaxed italic break-words px-1 drop-shadow">
               “Some Loves,friendships,attachment & attractions never forgotablle until they stay...Is this called Loyalty or not 🙃 ???”
             </blockquote>
 
@@ -194,56 +201,58 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
               <span title="Upside down 🙃">🙃</span>
             </div>
             
-            <p className="text-[11px] sm:text-xs text-stone-700 max-w-lg mx-auto font-medium">
+            <p className="text-[11px] sm:text-xs text-rose-100 max-w-lg mx-auto font-medium leading-relaxed">
               Do we hold onto the person, or the version of ourselves that existed when they were still here?
             </p>
           </div>
         </section>
 
-        {/* SECTION 2: LORE & ESSENCE OF LIME GREEN */}
+        {/* SECTION 2: LORE & ESSENCE OF LIME GREEN (Card 2: Grassy Green, Card 3: Golden bg) */}
         <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5 items-stretch">
           
-          <div className="w-full p-3.5 sm:p-6 rounded-2xl bg-white/90 border-2 border-emerald-400 shadow-sm flex flex-col justify-between">
+          {/* Card 2: Grassy Green Background */}
+          <div className="w-full p-4 sm:p-6 rounded-2xl bg-[#2e7d32] border-2 border-lime-300/80 shadow-xl flex flex-col justify-between text-white">
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-lg sm:text-xl">💚🍵</span>
-                <span className="text-[10px] sm:text-xs font-mono font-bold text-emerald-800 px-2 py-0.5 rounded-full bg-emerald-100 border border-emerald-400">
+                <span className="text-[10px] sm:text-xs font-mono font-bold text-white px-2.5 py-0.5 rounded-full bg-black/25 border border-lime-200/50 shadow-sm">
                   Core Essence
                 </span>
               </div>
-              <h3 className="text-base sm:text-xl font-serif text-emerald-950 font-bold mb-1.5 leading-snug">
+              <h3 className="text-base sm:text-xl font-serif text-lime-100 font-bold mb-1.5 leading-snug drop-shadow-sm">
                 The Circle Beyond Individuals
               </h3>
-              <p className="text-stone-800 text-xs sm:text-sm leading-relaxed font-medium">
+              <p className="text-white text-xs sm:text-sm leading-relaxed font-medium">
                 “Lime Green 💚, is not based on a single person but a collection of cherished moments shared with a group of friends or else???”
               </p>
             </div>
 
-            <div className="mt-3 pt-2 border-t border-emerald-100 text-[11px] text-stone-600 font-semibold flex items-center justify-between">
+            <div className="mt-4 pt-2.5 border-t border-white/25 text-[11px] text-lime-100 font-semibold flex items-center justify-between">
               <span>Origin: Autumn 2015</span>
-              <span className="text-emerald-700 font-mono">Bound by Memory</span>
+              <span className="text-white font-mono font-bold bg-black/20 px-2 py-0.5 rounded">Bound by Memory</span>
             </div>
           </div>
 
-          <div className="w-full p-3.5 sm:p-6 rounded-2xl bg-white/90 border-2 border-amber-400 shadow-sm flex flex-col justify-between">
+          {/* Card 3: Golden Background */}
+          <div className="w-full p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-[#f5c531] via-[#e5b326] to-[#d4a017] border-2 border-amber-200 shadow-xl flex flex-col justify-between text-[#2d1804]">
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-lg sm:text-xl">📜🔏</span>
-                <span className="text-[10px] sm:text-xs font-mono font-bold text-amber-900 px-2 py-0.5 rounded-full bg-amber-100 border border-amber-400">
+                <span className="text-[10px] sm:text-xs font-mono font-bold text-amber-950 px-2.5 py-0.5 rounded-full bg-white/40 border border-amber-900/30 shadow-sm">
                   The Archive
                 </span>
               </div>
-              <h3 className="text-base sm:text-xl font-serif text-amber-950 font-bold mb-1.5 leading-snug">
+              <h3 className="text-base sm:text-xl font-serif text-[#2a1400] font-black mb-1.5 leading-snug">
                 Rules & The 18 Chapters
               </h3>
-              <p className="text-stone-800 text-xs sm:text-sm leading-relaxed font-medium">
+              <p className="text-[#381c03] text-xs sm:text-sm leading-relaxed font-bold">
                 “Lime Green 💚 contains of total 803 rules, while some are private,some are authorised & some are Public...Still Current of 18 Chapters..(some founded & some lost :)”
               </p>
             </div>
 
-            <div className="mt-3 pt-2 border-t border-amber-100 text-[11px] text-stone-600 font-semibold flex items-center justify-between">
+            <div className="mt-4 pt-2.5 border-t border-[#7a4805]/25 text-[11px] text-[#422204] font-bold flex items-center justify-between">
               <span>Categories: Public • Auth • Private</span>
-              <span className="text-amber-800 font-mono font-bold">Current 18 Chapters</span>
+              <span className="text-stone-900 font-mono font-black bg-white/40 px-2 py-0.5 rounded">Current 18 Chapters</span>
             </div>
           </div>
 
