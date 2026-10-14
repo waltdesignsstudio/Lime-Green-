@@ -4,6 +4,7 @@ import { Footer } from "../components/Footer";
 import { AutumnLeavesFrame } from "../components/AutumnLeavesFrame";
 import { PageTransitionLoader } from "../components/PageTransitionLoader";
 import { FixedMusicControl } from "../components/FixedMusicControl";
+import { TheLeftAndTheIndus } from "../components/TheLeftAndTheIndus";
 import { LOGO_IMAGE_URL, LOGO_HREF, LEAF_IMAGE_PATH, SITE_SUBTITLE, SITE_TITLE } from "../constants/assets";
 import { RULES_DATA } from "../data/mockData";
 
@@ -160,6 +161,9 @@ export const YellowAutumn: React.FC<YellowAutumnProps> = ({ onNavigatePage }) =>
             The seasonal gateway is currently locked under early autumn frost. Enter your secret character clearance to unlock the confidential harvest archives.
           </p>
         </section>
+
+        {/* THE LEFT & THE INDUS - CLASSIFIED UNPREDICTABLE CHANCE */}
+        <TheLeftAndTheIndus />
 
         {/* SECTION 1: AUTHORISATION GATE */}
         <section className="w-full max-w-2xl mx-auto p-4 sm:p-8 rounded-2xl bg-white/95 border-2 border-amber-400 shadow-sm space-y-3.5">

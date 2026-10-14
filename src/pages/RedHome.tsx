@@ -125,21 +125,31 @@ export const RedHome: React.FC<RedHomeProps> = ({ onNavigatePage }) => {
             </p>
 
             {/* UPCOMING INCIDENT: The Left & the Indus */}
-            <div className="w-full max-w-xl mx-auto p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-stone-900 via-[#1e2430] to-stone-900 border-2 border-amber-400/80 text-white shadow-xl space-y-1 text-center">
+            <div className="w-full max-w-xl mx-auto p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-stone-900 via-[#1e2430] to-stone-900 border-2 border-amber-400/80 text-white shadow-xl space-y-2 text-center">
               <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
                 <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping shrink-0" />
                 <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest text-amber-300">
                   Upcoming Incident
                 </span>
                 <span className="text-stone-400">•</span>
-                <span className="text-[10px] sm:text-xs font-mono text-emerald-300">Classified Event</span>
+                <span className="text-[10px] sm:text-xs font-mono text-emerald-300 font-bold">
+                  Classified Event
+                </span>
               </div>
-              <h3 className="text-sm sm:text-lg font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-200 to-sky-200">
-                The Left & the Indus
+              <h3 className="text-base sm:text-xl font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-200 to-sky-200">
+                The Left &amp; the Indus
               </h3>
-              <p className="text-[11px] sm:text-xs text-stone-300 font-light italic max-w-md mx-auto leading-relaxed">
-                “Where the left fork departs into silence and the ancient waters of the Indus carry away what could never be spoken.”
-              </p>
+              <div className="flex items-center justify-center gap-2.5 pt-1">
+                <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/50 text-xs font-mono font-bold">
+                  Released 14%
+                </span>
+                <button
+                  onClick={() => handleNavigate("yellow", "/yellow-autumn.html#the-left-and-the-indus")}
+                  className="px-4 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-lime-400 hover:from-emerald-400 hover:to-lime-300 text-stone-950 font-black text-xs font-mono cursor-pointer shadow-md hover:scale-105 active:scale-95 transition-all"
+                >
+                  click here
+                </button>
+              </div>
             </div>
 
             {/* CTA Buttons: Full width on mobile with prominent vibrating Pages button */}

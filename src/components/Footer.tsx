@@ -1,5 +1,5 @@
 import React from "react";
-import { Instagram, ExternalLink } from "lucide-react";
+import { Instagram } from "lucide-react";
 import { SITE_SUBTITLE, SITE_TITLE, MUSIC_TITLE } from "../constants/assets";
 
 interface FooterProps {
@@ -101,29 +101,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <p className="text-xs sm:text-sm text-orange-100 font-medium">
           Follow this ID &amp; So on :) to be Continued
         </p>
-        <div className="pt-1">
+        <div className="pt-2 flex justify-center">
           <a
             href="https://instagram.com/_limegreen_13?exln=MWFhbHJjamo1MXJ4ZA%3D%3D"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-pink-600 via-rose-600 to-amber-500 hover:from-pink-500 hover:to-amber-400 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all transform hover:scale-105 active:scale-95 border border-white/30"
+            aria-label="Instagram"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-pink-600 via-rose-600 to-amber-500 hover:from-pink-500 hover:to-amber-400 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all transform hover:scale-105 active:scale-95 border border-white/30"
           >
             <Instagram className="w-4 h-4" />
-            <span>Click Here (Instagram) : @_limegreen_13</span>
-            <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+            <span>Instagram</span>
           </a>
         </div>
-        <p className="text-[11px] text-orange-200 font-mono break-all px-2">
-          Click Here (Instagram) :{" "}
-          <a
-            href="https://instagram.com/_limegreen_13?exln=MWFhbHJjamo1MXJ4ZA%3D%3D"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-white"
-          >
-            https://instagram.com/_limegreen_13?exln=MWFhbHJjamo1MXJ4ZA%3D%3D
-          </a>
-        </p>
       </div>
 
       <div className="max-w-6xl mx-auto mt-4 pt-3 border-t border-orange-400/40 text-center text-[11px] sm:text-xs text-orange-200">
